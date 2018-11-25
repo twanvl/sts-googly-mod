@@ -4,6 +4,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.megacrit.cardcrawl.core.Settings;
+import com.megacrit.cardcrawl.helpers.input.InputHelper;
 
 public class GooglyEye {
     GooglyEyeConfig.CardEye config;
@@ -167,5 +169,18 @@ public class GooglyEye {
         this.x = x + config.x * scale;
         this.y = y + config.y * scale;
         this.radius = config.size * scale;
+    }
+
+    public void updateForCursor() {
+        // Track mouse cursor
+        pupilX = 0.001f * radius * (InputHelper.mX - x) / Settings.scale;
+        pupilY = 0.001f * radius * (InputHelper.mY - y) / Settings.scale;
+
+        // constrain pupil
+        float pupilD = (float)Math.sqrt(pupilX*pupilX + pupilY*pupilY);
+        if (pupilD > radius * PUPIL_MAX_OFFSET) {
+            pupilX *= radius * PUPIL_MAX_OFFSET / pupilD;
+            pupilY *= radius * PUPIL_MAX_OFFSET / pupilD;
+        }
     }
 }
