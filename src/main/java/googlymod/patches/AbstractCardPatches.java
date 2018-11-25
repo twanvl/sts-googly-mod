@@ -19,9 +19,9 @@ public class AbstractCardPatches {
 
     @SpirePatch(clz=AbstractCard.class, method="update")
     public static class Update {
-        void Postfix(AbstractCard card) {
-            float drawX = card.current_x - 125.0f;
-            float drawY = card.current_y - 95.0f;
+        public static void Postfix(AbstractCard card) {
+            float drawX = card.current_x + (-250.0f/2.0f) * card.drawScale * Settings.scale;
+            float drawY = card.current_y + (72.0f-190.0f/2) * card.drawScale * Settings.scale;
             float scale = card.drawScale * 0.5f * Settings.scale;
             ArrayList<GooglyEye> eyes = EyeFields.eyes.get(card);
             if (eyes == null) {
@@ -42,7 +42,7 @@ public class AbstractCardPatches {
     @SpirePatch(clz=AbstractCard.class, method="renderPortrait")
     @SpirePatch(clz=AbstractCard.class, method="renderJokePortrait")
     public static class Render {
-        void Postfix(AbstractCard card, SpriteBatch sb) {
+        public static void Postfix(AbstractCard card, SpriteBatch sb) {
             ArrayList<GooglyEye> eyes = EyeFields.eyes.get(card);
             if (eyes != null) {
                 for (GooglyEye eye : eyes) {

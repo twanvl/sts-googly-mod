@@ -26,11 +26,15 @@ public class GooglyEyeConfig {
     static {
         noEyes = new ArrayList<>();
         {
-            CardEye eye = new CardEye(); eye.x = 250-20; eye.y = 190; eye.size = 10;
+            CardEye eye = new CardEye(); eye.x = 250-30; eye.y = 190; eye.size = 25;
             noEyes.add(eye);
         }
         {
-            CardEye eye = new CardEye(); eye.x = 250+20; eye.y = 190; eye.size = 20;
+            CardEye eye = new CardEye(); eye.x = 250+30; eye.y = 190; eye.size = 25;
+            noEyes.add(eye);
+        }
+        {
+            CardEye eye = new CardEye(); eye.x = 250; eye.y = 90; eye.size = 50;
             noEyes.add(eye);
         }
     }
