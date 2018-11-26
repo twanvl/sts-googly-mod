@@ -7,10 +7,17 @@ import java.util.HashMap;
 import com.badlogic.gdx.Gdx;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.megacrit.cardcrawl.helpers.AsyncSaver;
 
 public class GooglyEyeConfig {
     public static class CardEye {
         public float x, y, size;
+        public CardEye() {}
+        public CardEye(float x, float y, float size) {
+            this.x = x;
+            this.y = y;
+            this.size = size;
+        }
     }
     public static class CreatureEye extends CardEye {
         public String bone;
@@ -22,20 +29,14 @@ public class GooglyEyeConfig {
     private static final String DATA_FILE = "googlymod/eye-locations.json";
     private static GooglyEyeConfig theConfig = null;
 
+    private static boolean lotsOfEyes = false;
     private static ArrayList<CardEye> noEyes;
     static {
         noEyes = new ArrayList<>();
-        {
-            CardEye eye = new CardEye(); eye.x = 250-30; eye.y = 190; eye.size = 25;
-            noEyes.add(eye);
-        }
-        {
-            CardEye eye = new CardEye(); eye.x = 250+30; eye.y = 190; eye.size = 25;
-            noEyes.add(eye);
-        }
-        {
-            CardEye eye = new CardEye(); eye.x = 250; eye.y = 90; eye.size = 50;
-            noEyes.add(eye);
+        if (lotsOfEyes) {
+            noEyes.add(new CardEye(250-30, 190, 25));
+            noEyes.add(new CardEye(250+30, 190, 25));
+            noEyes.add(new CardEye(250, 90, 50));
         }
     }
 
@@ -46,10 +47,22 @@ public class GooglyEyeConfig {
         theConfig = gson.fromJson(contents, GooglyEyeConfig.class);
     }
 
+    private static void save() {
+        GsonBuilder gsonBuilder = new GsonBuilder();
+        Gson gson = gsonBuilder.setPrettyPrinting().create();
+        AsyncSaver.save("eye-locations.json", gson.toJson(theConfig));
+    }
+
     public static ArrayList<CardEye> getCardEyes(String cardId) {
         if (theConfig == null) load();
         ArrayList<CardEye> result = theConfig.cards.get(cardId);
         if (result == null) return noEyes;
         return result;
+    }
+
+    public static void setCardEyes(String cardId, ArrayList<CardEye> eyes) {
+        if (theConfig == null) load();
+        theConfig.cards.put(cardId, eyes);
+        save();
     }
 }

@@ -8,7 +8,7 @@ import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.helpers.input.InputHelper;
 
 public class GooglyEye {
-    GooglyEyeConfig.CardEye config;
+    public GooglyEyeConfig.CardEye config;
     float x, y, radius;
     float pupilX = 0.f, pupilY = 0.f;
     float vx, vy, pupilVx, pupilVy;
@@ -165,7 +165,7 @@ public class GooglyEye {
         this.radius = newRadius;
     }
 
-    private void updatePosition(float x, float y, float scale) {
+    public void updatePosition(float x, float y, float scale) {
         this.x = x + config.x * scale;
         this.y = y + config.y * scale;
         this.radius = config.size * scale;
@@ -182,5 +182,10 @@ public class GooglyEye {
             pupilX *= radius * PUPIL_MAX_OFFSET / pupilD;
             pupilY *= radius * PUPIL_MAX_OFFSET / pupilD;
         }
+    }
+    public boolean hovered() {
+        float dx = InputHelper.mX - x;
+        float dy = InputHelper.mY - y;
+        return dx*dx + dy*dy <= radius*radius;
     }
 }
