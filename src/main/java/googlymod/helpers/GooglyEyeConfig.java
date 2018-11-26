@@ -79,4 +79,16 @@ public class GooglyEyeConfig {
         theConfig.relics.put(relicId, eyes);
         save();
     }
+
+    public static ArrayList<CardEye> getCharSelectEyes(String playerClass) {
+        if (theConfig == null) load();
+        ArrayList<CardEye> result = theConfig.charSelect.get(playerClass);
+        if (result == null) return noEyes;
+        return result;
+    }
+    public static void setCharSelectEyes(String playerClass, ArrayList<CardEye> eyes) {
+        if (theConfig == null) load();
+        theConfig.charSelect.put(playerClass, eyes);
+        save();
+    }
 }

@@ -2,6 +2,7 @@ package googlymod.helpers;
 
 import java.util.ArrayList;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class GooglyEyeHelpers {
@@ -20,6 +21,13 @@ public class GooglyEyeHelpers {
         }
     }
 
+    public static void updateEyesPosition(ArrayList<GooglyEye> eyes, float x, float y, float scale) {
+        if (eyes == null) return;
+        for (GooglyEye eye : eyes) {
+            eye.updatePosition(x,y,scale);
+        }
+    }
+
     public static void updateEyesForCursor(ArrayList<GooglyEye> eyes) {
         if (eyes == null) return;
         for (GooglyEye eye : eyes) {
@@ -29,6 +37,7 @@ public class GooglyEyeHelpers {
 
     public static void renderEyes(ArrayList<GooglyEye> eyes, SpriteBatch sb) {
         if (eyes != null) {
+            sb.setColor(Color.WHITE);
             for (GooglyEye eye : eyes) {
                 eye.render(sb);
             }

@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.evacipated.cardcrawl.modthespire.lib.SpireField;
 import com.evacipated.cardcrawl.modthespire.lib.SpirePatch;
-import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.relics.AbstractRelic;
 
@@ -42,17 +41,14 @@ public class AbstractRelicPatches {
     public static class Render {
         public static void Postfix(AbstractRelic relic, SpriteBatch sb) {
             if (Settings.hideRelics) return;
-            sb.setColor(Color.WHITE);
             GooglyEyeHelpers.renderEyes(EyeFields.eyes.get(relic), sb);
         }
         public static void Postfix(AbstractRelic relic, SpriteBatch sb, Color outlineColor) {
             if (Settings.hideRelics) return;
-            sb.setColor(Color.WHITE);
             GooglyEyeHelpers.renderEyes(EyeFields.eyes.get(relic), sb);
         }
         public static void Postfix(AbstractRelic relic, SpriteBatch sb, boolean renderAmound, Color outlineColor) {
             if (Settings.hideRelics) return;
-            sb.setColor(Color.WHITE);
             GooglyEyeHelpers.renderEyes(EyeFields.eyes.get(relic), sb);
         }
     }
