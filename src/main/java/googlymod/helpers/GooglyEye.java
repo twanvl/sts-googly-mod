@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.MathUtils;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.helpers.input.InputHelper;
 
@@ -32,6 +33,10 @@ public class GooglyEye {
         this.config = config;
         updatePosition(x,y,scale);
     }
+    public GooglyEye(GooglyEyeConfig.CardEye config, float x, float y, float offsetX,float offsetY, float angle, float scale) {
+        this.config = config;
+        updatePosition(x,y,offsetX,offsetY,angle,scale);
+    }
 
     public void render(SpriteBatch sb) {
         float pupilRadius = radius * PUPIL_RADIUS;
@@ -39,7 +44,7 @@ public class GooglyEye {
         sb.draw(pupilTexture, x+pupilX-pupilRadius,y+pupilY-pupilRadius, pupilRadius*2.f,pupilRadius*2.f);
     }
 
-    public void update(float tx, float ty, float scale) {
+    public void update(float tx, float ty, float offsetX, float offsetY, float angle, float scale) {
         /*
         Logic for the animation / physics simulation
         ============================================
@@ -98,8 +103,10 @@ public class GooglyEye {
         */
 
         // New position
-        float newX = tx + config.x * scale;
-        float newY = ty + config.y * scale;
+        offsetX += config.x * scale;
+        offsetY += config.y * scale;
+        float newX = tx + MathUtils.cosDeg(angle) * offsetX - MathUtils.sinDeg(angle) * offsetY;
+        float newY = ty + MathUtils.sinDeg(angle) * offsetX + MathUtils.cosDeg(angle) * offsetY;
         float newRadius = config.size * scale;
         float t = Gdx.graphics.getDeltaTime();
         t = Math.max(t, 0.0001f);
@@ -168,6 +175,14 @@ public class GooglyEye {
     public void updatePosition(float x, float y, float scale) {
         this.x = x + config.x * scale;
         this.y = y + config.y * scale;
+        this.radius = config.size * scale;
+    }
+
+    public void updatePosition(float x, float y, float offsetX, float offsetY, float angle, float scale) {
+        offsetX += config.x * scale;
+        offsetY += config.y * scale;
+        this.x = x + MathUtils.cosDeg(angle) * offsetX - MathUtils.sinDeg(angle) * offsetY;
+        this.y = y + MathUtils.sinDeg(angle) * offsetX + MathUtils.cosDeg(angle) * offsetY;
         this.radius = config.size * scale;
     }
 

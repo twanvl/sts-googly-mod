@@ -23,14 +23,14 @@ public class AbstractRelicPatches {
     @SpirePatch(clz=AbstractRelic.class, method="update")
     public static class Update {
         public static void Postfix(AbstractRelic relic) {
-            float drawX = relic.currentX;
-            float drawY = relic.currentY;
+            float x = relic.currentX;
+            float y = relic.currentY;
             float scale = relic.scale * 0.5f;
             ArrayList<GooglyEye> eyes = EyeFields.eyes.get(relic);
             if (eyes == null) {
-                EyeFields.eyes.set(relic, GooglyEyeHelpers.initEyes(GooglyEyeConfig.getRelicEyes(relic.relicId), drawX,drawY,scale));
+                EyeFields.eyes.set(relic, GooglyEyeHelpers.initEyes(GooglyEyeConfig.getRelicEyes(relic.relicId), x,y,0,0,0,scale));
             } else {
-                GooglyEyeHelpers.updateEyes(eyes, drawX,drawY,scale);
+                GooglyEyeHelpers.updateEyes(eyes, x,y,0,0,0,scale);
             }
         }
     }

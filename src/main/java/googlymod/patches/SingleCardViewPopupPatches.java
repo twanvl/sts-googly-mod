@@ -26,10 +26,10 @@ public class SingleCardViewPopupPatches {
     @SpirePatch(clz=SingleCardViewPopup.class, method="open", paramtypez={AbstractCard.class, CardGroup.class})
     public static class Open {
         public static void Postfix(SingleCardViewPopup self, AbstractCard card) {
-            float drawX = (float)Settings.WIDTH / 2.0f - 250.0f * Settings.scale;
-            float drawY = (float)Settings.HEIGHT / 2.0f - 190.0f * Settings.scale + 136.0f * Settings.scale;
+            float drawX = (float)Settings.WIDTH / 2.0f, offsetX = - 250.0f * Settings.scale;
+            float drawY = (float)Settings.HEIGHT / 2.0f, offsetY = - 190.0f * Settings.scale + 136.0f * Settings.scale;
             float scale = Settings.scale;
-            ArrayList<GooglyEye> eyes = GooglyEyeHelpers.initEyes(GooglyEyeConfig.getCardEyes(card.cardID), drawX, drawY, scale);
+            ArrayList<GooglyEye> eyes = GooglyEyeHelpers.initEyes(GooglyEyeConfig.getCardEyes(card.cardID), drawX,drawY,offsetX,offsetY,0, scale);
             EyeFields.eyes.set(self, eyes);
         }
         public static void Postfix(SingleCardViewPopup self, AbstractCard card, CardGroup group) {

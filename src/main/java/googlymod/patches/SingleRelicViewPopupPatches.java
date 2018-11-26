@@ -30,7 +30,7 @@ public class SingleRelicViewPopupPatches {
             float drawX = (float)Settings.WIDTH / 2.0f;
             float drawY = (float)Settings.HEIGHT / 2.0f + RELIC_OFFSET_Y;
             float scale = Settings.scale;
-            ArrayList<GooglyEye> eyes = GooglyEyeHelpers.initEyes(GooglyEyeConfig.getRelicEyes(relic.relicId), drawX, drawY, scale);
+            ArrayList<GooglyEye> eyes = GooglyEyeHelpers.initEyes(GooglyEyeConfig.getRelicEyes(relic.relicId), drawX, drawY,0,0,0, scale);
             EyeFields.eyes.set(self, eyes);
         }
         public static void Postfix(SingleRelicViewPopup self, AbstractRelic relic, ArrayList<AbstractRelic> group) {

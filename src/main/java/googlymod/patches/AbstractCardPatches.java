@@ -21,14 +21,14 @@ public class AbstractCardPatches {
     @SpirePatch(clz=AbstractCard.class, method="update")
     public static class Update {
         public static void Postfix(AbstractCard card) {
-            float drawX = card.current_x + (-250.0f/2.0f) * card.drawScale * Settings.scale;
-            float drawY = card.current_y + (72.0f-190.0f/2) * card.drawScale * Settings.scale;
+            float drawX = card.current_x, offsetX = (-250.0f/2.0f) * card.drawScale * Settings.scale;
+            float drawY = card.current_y, offsetY = (72.0f-190.0f/2) * card.drawScale * Settings.scale;
             float scale = card.drawScale * 0.5f * Settings.scale;
             ArrayList<GooglyEye> eyes = EyeFields.eyes.get(card);
             if (eyes == null) {
-                EyeFields.eyes.set(card, GooglyEyeHelpers.initEyes(GooglyEyeConfig.getCardEyes(card.cardID), drawX,drawY,scale));
+                EyeFields.eyes.set(card, GooglyEyeHelpers.initEyes(GooglyEyeConfig.getCardEyes(card.cardID), drawX,drawY,offsetX,offsetY,card.angle,scale));
             } else {
-                GooglyEyeHelpers.updateEyes(eyes, drawX,drawY,scale);
+                GooglyEyeHelpers.updateEyes(eyes, drawX,drawY,offsetX,offsetY,card.angle,scale);
             }
         }
     }
