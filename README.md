@@ -2,6 +2,11 @@
 
 Makes the game infinitely better.
 
+## Improving custom cards ##
+
+In the card library, enable debug mode (using Basemod's `debug true` command). Then click on the image. Drag to move, right click to remove, and hold shift to resize.
+This creates a file `eye-locations.json`. Please submit this file by creating a github issue. I will accept locations for all modded content.
+
 ## Requirements ##
 * Slay the Spire
 * ModTheSpire v3.0.0 or newer (https://github.com/t-larson/ModTheSpire/releases)
