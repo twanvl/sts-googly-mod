@@ -10,6 +10,7 @@ import com.megacrit.cardcrawl.core.Settings;
 
 import googlymod.helpers.GooglyEye;
 import googlymod.helpers.GooglyEyeConfig;
+import googlymod.helpers.GooglyEyeHelpers;
 
 public class AbstractCardPatches {
     @SpirePatch(clz=AbstractCard.class, method=SpirePatch.CLASS)
@@ -25,16 +26,9 @@ public class AbstractCardPatches {
             float scale = card.drawScale * 0.5f * Settings.scale;
             ArrayList<GooglyEye> eyes = EyeFields.eyes.get(card);
             if (eyes == null) {
-                ArrayList<GooglyEyeConfig.CardEye> configs = GooglyEyeConfig.getCardEyes(card.cardID);
-                eyes = new ArrayList<>();
-                for (GooglyEyeConfig.CardEye config : configs) {
-                    eyes.add(new GooglyEye(config, drawX, drawY, scale));
-                }
-                EyeFields.eyes.set(card, eyes);
+                EyeFields.eyes.set(card, GooglyEyeHelpers.initEyes(GooglyEyeConfig.getCardEyes(card.cardID), drawX,drawY,scale));
             } else {
-                for (GooglyEye eye : eyes) {
-                    eye.update(drawX, drawY, scale);
-                }
+                GooglyEyeHelpers.updateEyes(eyes, drawX,drawY,scale);
             }
         }
     }
@@ -43,12 +37,7 @@ public class AbstractCardPatches {
     @SpirePatch(clz=AbstractCard.class, method="renderJokePortrait")
     public static class Render {
         public static void Postfix(AbstractCard card, SpriteBatch sb) {
-            ArrayList<GooglyEye> eyes = EyeFields.eyes.get(card);
-            if (eyes != null) {
-                for (GooglyEye eye : eyes) {
-                    eye.render(sb);
-                }
-            }
+            GooglyEyeHelpers.renderEyes(EyeFields.eyes.get(card), sb);
         }
     }
 }

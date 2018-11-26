@@ -24,6 +24,9 @@ public class GooglyEyeConfig {
     }
 
     public HashMap<String,ArrayList<CardEye>> cards = new HashMap<>();
+    public HashMap<String,ArrayList<CardEye>> relics = new HashMap<>();
+    public HashMap<String,ArrayList<CardEye>> events = new HashMap<>();
+    public HashMap<String,ArrayList<CardEye>> charSelect = new HashMap<>();
     public HashMap<String,ArrayList<CreatureEye>> creatures = new HashMap<>();
 
     private static final String DATA_FILE = "googlymod/eye-locations.json";
@@ -59,10 +62,21 @@ public class GooglyEyeConfig {
         if (result == null) return noEyes;
         return result;
     }
-
     public static void setCardEyes(String cardId, ArrayList<CardEye> eyes) {
         if (theConfig == null) load();
         theConfig.cards.put(cardId, eyes);
+        save();
+    }
+
+    public static ArrayList<CardEye> getRelicEyes(String relicId) {
+        if (theConfig == null) load();
+        ArrayList<CardEye> result = theConfig.relics.get(relicId);
+        if (result == null) return noEyes;
+        return result;
+    }
+    public static void setRelicEyes(String relicId, ArrayList<CardEye> eyes) {
+        if (theConfig == null) load();
+        theConfig.relics.put(relicId, eyes);
         save();
     }
 }
