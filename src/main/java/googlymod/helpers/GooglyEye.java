@@ -15,6 +15,7 @@ public class GooglyEye {
     float vx, vy, pupilVx, pupilVy;
     private static final float PUPIL_RADIUS = 0.52f;
     private static final float PUPIL_MAX_OFFSET = 0.95f - PUPIL_RADIUS;
+    private static final float IMAGE_SCALE = 1.1f;
     private static final boolean EYE_ACCELARATION = false;
     private static final float EYE_BLEND = 10.0f;
     private static final float FRICTION_EYE = 10.0f;
@@ -39,9 +40,10 @@ public class GooglyEye {
     }
 
     public void render(SpriteBatch sb) {
-        float pupilRadius = radius * PUPIL_RADIUS;
-        sb.draw(eyeTexture, x-radius,y-radius, radius*2.f,radius*2.f);
-        sb.draw(pupilTexture, x+pupilX-pupilRadius,y+pupilY-pupilRadius, pupilRadius*2.f,pupilRadius*2.f);
+        float size = radius * IMAGE_SCALE;
+        float pupilSize = radius * PUPIL_RADIUS * IMAGE_SCALE;
+        sb.draw(eyeTexture, x-size,y-size, size*2.f,size*2.f);
+        sb.draw(pupilTexture, x+pupilX-pupilSize,y+pupilY-pupilSize, pupilSize*2.f,pupilSize*2.f);
     }
 
     public void update(float tx, float ty, float offsetX, float offsetY, float angle, float scale) {
