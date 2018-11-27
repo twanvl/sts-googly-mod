@@ -28,6 +28,13 @@ public class CharacterSelectScreenPatches {
         public static SpireField<ArrayList<GooglyEye>> eyes = new SpireField<>(() -> null);
     }
 
+    @SpirePatch(clz=CharacterSelectScreen.class, method="open")
+    public static class Open {
+        public static void Postfix(CharacterSelectScreen self, boolean endless) {
+            EyeFields.eyes.set(self, null);
+        }
+    }
+
     @SpirePatch(clz=CharacterOption.class, method="updateHitbox")
     public static class SelectOption {
         @SpireInsertPatch(locator = Locator.class)
