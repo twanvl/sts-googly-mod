@@ -10,7 +10,9 @@ In the card library, enable debug mode (using Basemod's `debug true` command).
 * right click to remove an eye,
 * and hold shift to resize.
 
-This creates a file `eye-locations.json`. Please submit this file by creating a github issue. I will accept locations for all modded content.
+This creates a file `googly-eye-locations.json` in the .
+You can include this file in your own mod's resources (next to ModTheSpire.json).
+Please submit changes to the googly-eye-locations for the base game by creating a github issue.
 
 ## Installation ##
 1. [Download `ModTheSpire.jar`](https://github.com/kiooeht/ModTheSpire/releases)
