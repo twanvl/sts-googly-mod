@@ -36,8 +36,11 @@ public class GooglyEyeHelpers {
     }
 
     public static void renderEyes(ArrayList<GooglyEye> eyes, SpriteBatch sb) {
+        renderEyes(eyes, sb, Color.WHITE);
+    }
+    public static void renderEyes(ArrayList<GooglyEye> eyes, SpriteBatch sb, Color color) {
         if (eyes != null) {
-            sb.setColor(Color.WHITE);
+            sb.setColor(color);
             for (GooglyEye eye : eyes) {
                 eye.render(sb);
             }

@@ -91,4 +91,16 @@ public class GooglyEyeConfig {
         theConfig.charSelect.put(playerClass, eyes);
         save();
     }
+
+    public static ArrayList<CardEye> getEventEyes(String eventImage) {
+        if (theConfig == null) load();
+        ArrayList<CardEye> result = theConfig.events.get(eventImage);
+        if (result == null) return noEyes;
+        return result;
+    }
+    public static void setEventEyes(String eventImage, ArrayList<CardEye> eyes) {
+        if (theConfig == null) load();
+        theConfig.events.put(eventImage, eyes);
+        save();
+    }
 }
