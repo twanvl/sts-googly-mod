@@ -3,7 +3,7 @@
 
   <groupId>googlymod</groupId>
   <artifactId>GooglyMod</artifactId>
-  <version>1.1.0</version>
+  <version>1.2.0</version>
 
   <name>GooglyMod</name>
   <description>Makes the game infinitely better.</description>
@@ -19,7 +19,7 @@
     <dependency>
       <groupId>basemod</groupId>
       <artifactId>BaseMod</artifactId>
-      <version>1.6.5</version>
+      <version>5.0.0</version>
       <scope>system</scope>
       <systemPath>${basedir}/../_ModTheSpire/mods/BaseMod.jar</systemPath>
     </dependency>
