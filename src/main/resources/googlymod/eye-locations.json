@@ -2951,7 +2951,28 @@
       }
     ]
   },
-  "creatures": {},
+  "creatures": {
+    "images/npcs/neow/skeleton.json": [
+      {
+        "bone": "bone14",
+        "x": -8.005325,
+        "y": -37.44888,
+        "size": 20.0
+      },
+      {
+        "bone": "bone13",
+        "x": -27.647057,
+        "y": -43.48001,
+        "size": 20.0
+      },
+      {
+        "bone": "bone12",
+        "x": -37.87279,
+        "y": -36.69825,
+        "size": 20.0
+      }
+    ]
+  },
   "events": {
     "images/events/addict.jpg": [
       {

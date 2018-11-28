@@ -44,6 +44,7 @@ public class GooglyEyeEditor {
                 float dx = x - config.x;
                 float dy = y - config.y;
                 config.size = (float)Math.sqrt(dx*dx + dy*dy);
+                config.size = Math.max(config.size, 1.0f);
                 activeEye.updatePosition(drawX,drawY,scale);
             } else {
                 // move

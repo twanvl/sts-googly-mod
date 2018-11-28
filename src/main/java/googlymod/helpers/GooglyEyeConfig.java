@@ -1,5 +1,6 @@
 package googlymod.helpers;
 
+import java.io.FileWriter;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
@@ -14,7 +15,6 @@ import com.evacipated.cardcrawl.modthespire.Loader;
 import com.evacipated.cardcrawl.modthespire.ModInfo;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.megacrit.cardcrawl.helpers.AsyncSaver;
 
 public class GooglyEyeConfig {
     public static class CardEye {
@@ -28,6 +28,13 @@ public class GooglyEyeConfig {
     }
     public static class CreatureEye extends CardEye {
         public String bone;
+        public CreatureEye() {}
+        public CreatureEye(float x, float y, float size, String bone) {
+            this.x = x;
+            this.y = y;
+            this.size = size;
+            this.bone = bone;
+        }
     }
 
     public HashMap<String,ArrayList<CardEye>> cards = new HashMap<>();
@@ -45,15 +52,22 @@ public class GooglyEyeConfig {
         public TreeMap<String,ArrayList<CardEye>> relics = new TreeMap<>();
         public TreeMap<String,ArrayList<CardEye>> events = new TreeMap<>();
         public TreeMap<String,ArrayList<CardEye>> charSelect = new TreeMap<>();
-        //public TreeMap<String,ArrayList<CreatureEye>> creatures = new TreeMap<>();
+        public TreeMap<String,ArrayList<CreatureEye>> creatures = new TreeMap<>();
 
         private void save() {
-            AsyncSaver.save("googly-eye-locations.json", gson.toJson(this));
+            try {
+                FileWriter writer = new FileWriter("googly-eye-locations.json");
+                gson.toJson(this, writer);
+                writer.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
     static EditedConfig editedConfig = new EditedConfig();
 
     private static ArrayList<CardEye> noEyes = new ArrayList<>();
+    private static ArrayList<CreatureEye> noCreatureEyes = new ArrayList<>();
 
     private void merge(GooglyEyeConfig config) {
         cards.putAll(config.cards);
@@ -143,6 +157,15 @@ public class GooglyEyeConfig {
     public static void setEventEyes(String eventImage, ArrayList<CardEye> eyes) {
         theConfig.events.put(eventImage, eyes);
         editedConfig.events.put(eventImage, eyes);
+        editedConfig.save();
+    }
+
+    public static ArrayList<CreatureEye> getCreatureEyes(String skeletonPath) {
+        return theConfig.creatures.getOrDefault(skeletonPath, noCreatureEyes);
+    }
+    public static void setCreatureEyes(String eventImage, ArrayList<CreatureEye> eyes) {
+        theConfig.creatures.put(eventImage, eyes);
+        editedConfig.creatures.put(eventImage, eyes);
         editedConfig.save();
     }
 }
