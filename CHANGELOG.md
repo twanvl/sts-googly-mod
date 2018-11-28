@@ -1,3 +1,6 @@
+### v1.3.0
+* 20% more googly
+
 ### v1.2.0
 * Googly eyes on creatures
 * Support for per-mod googly-eye configuration:
