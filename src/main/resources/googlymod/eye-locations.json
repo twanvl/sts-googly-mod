@@ -2952,6 +2952,20 @@
     ]
   },
   "creatures": {
+    "images/npcs/merchant/skeleton.json": [
+      {
+        "bone": "mask",
+        "x": -7.5624666,
+        "y": 4.8937497,
+        "size": 8
+      },
+      {
+        "bone": "hoodbg",
+        "x": 8.545701,
+        "y": 7.050245,
+        "size": 8
+      }
+    ],
     "images/npcs/neow/skeleton.json": [
       {
         "bone": "bone14",
@@ -3115,12 +3129,28 @@
       }
     ],
     "Lagavulin": [],
+    "Looter": [
+      {
+        "bone": "mouth",
+        "x": -5.2492867,
+        "y": 5.75517,
+        "size": 3.874538
+      }
+    ],
     "Maw": [
       {
         "bone": "bone56",
         "x": -1.69205,
         "y": -10.951172,
         "size": 16.517233
+      }
+    ],
+    "Mugger": [
+      {
+        "bone": "goggles",
+        "x": -3.5928705,
+        "y": -0.5266495,
+        "size": 4.9942894
       }
     ],
     "Nemesis": [
