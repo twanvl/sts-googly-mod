@@ -1,7 +1,7 @@
 ### v1.2.0
 * Googly eyes on creatures
 * Support for per-mod googly-eye configuration:
-  Create a file googly-eye-config.json in the mod's resources (next to ModTheSpire.json).
+  Create a file googly-eye-locations.json in the mod's resources (next to ModTheSpire.json).
 
 ### v1.1.0
 * Googly eyes on relics
