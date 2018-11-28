@@ -9,7 +9,7 @@ import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.helpers.input.InputHelper;
 
 public class GooglyEye {
-    public GooglyEyeConfig.CardEye config;
+    protected GooglyEyeConfig.CardEye config;
     float x, y, radius;
     float pupilX = 0.f, pupilY = 0.f;
     float vx, vy, pupilVx, pupilVy;
@@ -18,8 +18,11 @@ public class GooglyEye {
     private static final float IMAGE_SCALE = 1.1f;
     private static final boolean EYE_ACCELARATION = false;
     private static final float EYE_BLEND = 10.0f;
-    private static final float FRICTION_EYE = 10.0f;
-    private static final float FRICTION_PUPIL = 10.0f;
+    private static final float FRICTION_EYE = 0.1f;
+    private static final float FRICTION_PUPIL = 4.0f;
+    private static final float INERTIA_PUPIL = 0.5f;
+    private static final float VELOCITY_PUPIL = INERTIA_PUPIL;
+    private static final float ROLLING_FRICTION = 0.5f;
     private static final float FRICTION_VELOCITY = 10.0f; // above this velocity, friction force scales linearly
     private static Texture eyeTexture = mipmapTexture("googlymod/images/eye.png");
     private static Texture pupilTexture = mipmapTexture("googlymod/images/pupil.png");
@@ -46,7 +49,38 @@ public class GooglyEye {
         sb.draw(pupilTexture, x+pupilX-pupilSize,y+pupilY-pupilSize, pupilSize*2.f,pupilSize*2.f);
     }
 
+    public void updatePosition(float x, float y, float scale) {
+        this.x = x + config.x * scale;
+        this.y = y + config.y * scale;
+        this.radius = config.size * scale;
+    }
+    public void update(float x, float y, float scale, boolean animate) {
+        float newX = x + config.x * scale;
+        float newY = y + config.y * scale;
+        updateInternal(newX, newY, scale, animate);
+    }
+
     public void update(float tx, float ty, float offsetX, float offsetY, float angle, float scale) {
+        update(tx,ty,offsetX,offsetY,angle,scale,true);
+    }
+    public void updatePosition(float tx, float ty, float offsetX, float offsetY, float angle, float scale) {
+        update(tx,ty,offsetX,offsetY,angle,scale,false);
+    }
+    public void update(float tx, float ty, float offsetX, float offsetY, float angle, float scale, boolean animate) {
+        offsetX += config.x * scale;
+        offsetY += config.y * scale;
+        float newX = tx + MathUtils.cosDeg(angle) * offsetX - MathUtils.sinDeg(angle) * offsetY;
+        float newY = ty + MathUtils.sinDeg(angle) * offsetX + MathUtils.cosDeg(angle) * offsetY;
+        updateInternal(newX, newY, scale, animate);
+    }
+
+    protected void updateInternal(float newX, float newY, float scale, boolean animate) {
+        if (!animate) {
+            this.radius = config.size * scale;
+            this.x = newX;
+            this.y = newY;
+            return;
+        }
         /*
         Logic for the animation / physics simulation
         ============================================
@@ -105,16 +139,13 @@ public class GooglyEye {
         */
 
         // New position
-        offsetX += config.x * scale;
-        offsetY += config.y * scale;
-        float newX = tx + MathUtils.cosDeg(angle) * offsetX - MathUtils.sinDeg(angle) * offsetY;
-        float newY = ty + MathUtils.sinDeg(angle) * offsetX + MathUtils.cosDeg(angle) * offsetY;
         float newRadius = config.size * scale;
+        this.radius = newRadius;
         float t = Gdx.graphics.getDeltaTime();
         t = Math.max(t, 0.0001f);
 
         // Friction
-        if (EYE_ACCELARATION) {
+        if (EYE_ACCELARATION || EYE_BLEND > 0.0f) {
             float v = (float)Math.sqrt(vx*vx + vy*vy);
             float scaleV = Math.max(0.f, 1.0f - FRICTION_EYE * radius * t / Math.min(radius*FRICTION_VELOCITY,Math.max(v,1e-5f)));
             vx *= scaleV;
@@ -134,17 +165,17 @@ public class GooglyEye {
         } else if (EYE_BLEND > 0.0f) {
             float blend = (float)Math.exp(-EYE_BLEND * t);
             newVx = blend*vx + (1.f-blend)*dx/t;
-            newVy = blend*vx + (1.f-blend)*dy/t;
+            newVy = blend*vy + (1.f-blend)*dy/t;
         } else {
             newVx = dx/t;
             newVy = dy/t;
         }
 
         // Adjust pupil frame of reference
-        pupilX -= dx;
-        pupilY -= dy;
-        pupilVx -= newVx - vx;
-        pupilVy -= newVy - vy;
+        pupilX -= dx * INERTIA_PUPIL;
+        pupilY -= dy * INERTIA_PUPIL;
+        pupilVx -= (newVx - vx) * VELOCITY_PUPIL;
+        pupilVy -= (newVy - vy) * VELOCITY_PUPIL;
 
         // Pupil friction
         float pv = (float)Math.sqrt(pupilVx*pupilVx + pupilVy*pupilVy);
@@ -162,6 +193,8 @@ public class GooglyEye {
             float pupilVradial = (pupilVx * pupilX + pupilVy * pupilY) / pupilD;
             pupilVx -= pupilVradial * pupilX/pupilD;
             pupilVy -= pupilVradial * pupilY/pupilD;
+            pupilVx *= Math.exp(-ROLLING_FRICTION * t);
+            pupilVy *= Math.exp(-ROLLING_FRICTION * t);
             pupilX *= radius * PUPIL_MAX_OFFSET / pupilD;
             pupilY *= radius * PUPIL_MAX_OFFSET / pupilD;
         }
@@ -171,21 +204,6 @@ public class GooglyEye {
         this.y = newY;
         this.vx = newVx;
         this.vy = newVy;
-        this.radius = newRadius;
-    }
-
-    public void updatePosition(float x, float y, float scale) {
-        this.x = x + config.x * scale;
-        this.y = y + config.y * scale;
-        this.radius = config.size * scale;
-    }
-
-    public void updatePosition(float x, float y, float offsetX, float offsetY, float angle, float scale) {
-        offsetX += config.x * scale;
-        offsetY += config.y * scale;
-        this.x = x + MathUtils.cosDeg(angle) * offsetX - MathUtils.sinDeg(angle) * offsetY;
-        this.y = y + MathUtils.sinDeg(angle) * offsetX + MathUtils.cosDeg(angle) * offsetY;
-        this.radius = config.size * scale;
     }
 
     public void updateForCursor() {
