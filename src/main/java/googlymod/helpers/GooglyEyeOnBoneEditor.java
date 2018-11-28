@@ -20,7 +20,6 @@ public class GooglyEyeOnBoneEditor {
         Vector2 minBound = new Vector2(), sizeBound = new Vector2();
         skeleton.getBounds(minBound, sizeBound);
         Vector2 maxBound = sizeBound.add(minBound);
-        skeleton.updateWorldTransform();
         // find eye
         GooglyEyeOnBone hoveredEye = null;
         for (GooglyEyeOnBone eye : eyes) {
