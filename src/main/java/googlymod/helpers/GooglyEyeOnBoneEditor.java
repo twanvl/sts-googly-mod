@@ -12,6 +12,7 @@ import com.megacrit.cardcrawl.helpers.input.InputHelper;
 
 public class GooglyEyeOnBoneEditor {
     static GooglyEyeOnBone activeEye = null;
+    static Skeleton activeSkeleton = null;
 
     public static void updateEdit(Skeleton skeleton, ArrayList<GooglyEyeOnBone> eyes, Consumer<ArrayList<GooglyEyeConfig.CreatureEye>> saveConfigs) {
         if (eyes == null) return;
@@ -19,6 +20,7 @@ public class GooglyEyeOnBoneEditor {
         Vector2 minBound = new Vector2(), sizeBound = new Vector2();
         skeleton.getBounds(minBound, sizeBound);
         Vector2 maxBound = sizeBound.add(minBound);
+        skeleton.updateWorldTransform();
         // find eye
         GooglyEyeOnBone hoveredEye = null;
         for (GooglyEyeOnBone eye : eyes) {
@@ -31,9 +33,11 @@ public class GooglyEyeOnBoneEditor {
             // remove eye
             eyes.remove(hoveredEye);
             activeEye = null;
+            activeSkeleton = null;
             saveConfig(eyes, saveConfigs);
         } else if (InputHelper.justClickedLeft && hoveredEye != null) {
             activeEye = hoveredEye;
+            activeSkeleton = skeleton;
             return;
         } else if (InputHelper.justClickedLeft && InputHelper.mX >= minBound.x && InputHelper.mY >= minBound.y && InputHelper.mX <= maxBound.x && InputHelper.mY <= maxBound.y && activeEye == null) {
             // find nearest bone
@@ -54,9 +58,10 @@ public class GooglyEyeOnBoneEditor {
             GooglyEyeConfig.CreatureEye config = new GooglyEyeConfig.CreatureEye(local.x, local.y, 25.f, nearestBone.getData().getName());
             eyes.add(new GooglyEyeOnBone(config, skeleton));
             activeEye = null;
+            activeSkeleton = null;
             saveConfig(eyes, saveConfigs);
         }
-        if (activeEye != null) {
+        if (activeEye != null && activeSkeleton == skeleton) {
             GooglyEyeConfig.CreatureEye config = activeEye.getConfig();
             Vector2 world = new Vector2(InputHelper.mX - skeleton.getX(), InputHelper.mY - skeleton.getY());
             Vector2 local = activeEye.bone.worldToLocal(world);

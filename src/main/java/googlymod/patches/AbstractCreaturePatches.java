@@ -26,19 +26,25 @@ public class AbstractCreaturePatches {
     @SpirePatch(clz=AbstractMonster.class, method="update")
     @SpirePatch(clz=AbstractPlayer.class, method="update")
     public static class Update {
-        public static void Postfix(AbstractCreature creature) {
+        public static void Postfix(AbstractPlayer creature) {
+            go(creature, creature.chosenClass.toString());
+        }
+        public static void Postfix(AbstractMonster creature) {
+            go(creature, creature.id);
+        }
+        public static void go(AbstractCreature creature, String id) {
             Skeleton skeleton = (Skeleton)ReflectionHacks.getPrivate(creature,AbstractCreature.class,"skeleton");
             if (skeleton != null) {
                 ArrayList<GooglyEyeOnBone> eyes = EyeFields.eyes.get(creature);
                 if (eyes == null) {
-                    eyes = GooglyEyeHelpers.initEyes(GooglyEyeConfig.getCreatureEyes(creature.id), skeleton);
+                    eyes = GooglyEyeHelpers.initEyes(GooglyEyeConfig.getCreatureEyes(id), skeleton);
                     EyeFields.eyes.set(creature, eyes);
                 } else {
                     GooglyEyeHelpers.updateEyes(eyes, skeleton);
                 }
                 if (Settings.isDebug) {
                     GooglyEyeOnBoneEditor.updateEdit(skeleton, eyes, (configs) -> {
-                        GooglyEyeConfig.setCreatureEyes(creature.id, configs);
+                        GooglyEyeConfig.setCreatureEyes(id, configs);
                     });
                 }
             }
@@ -49,11 +55,11 @@ public class AbstractCreaturePatches {
     @SpirePatch(clz=AbstractPlayer.class, method="renderPlayerImage")
     public static class Render {
         public static void Postfix(AbstractPlayer creature, SpriteBatch sb) {
-            GooglyEyeHelpers.renderEyes(EyeFields.eyes.get(creature), sb);
+            GooglyEyeHelpers.renderEyes(EyeFields.eyes.get(creature), sb, creature.tint.color);
         }
         public static void Postfix(AbstractMonster creature, SpriteBatch sb) {
             if (!creature.isDead && !creature.escaped) {
-                GooglyEyeHelpers.renderEyes(EyeFields.eyes.get(creature), sb);
+                GooglyEyeHelpers.renderEyes(EyeFields.eyes.get(creature), sb, creature.tint.color);
             }
         }
     }
