@@ -13,6 +13,7 @@ public class GooglyEye {
     float x, y, radius;
     float pupilX = 0.f, pupilY = 0.f;
     float vx, vy, pupilVx, pupilVy;
+    float mX, mY;
     private static final float PUPIL_RADIUS = 0.52f;
     private static final float PUPIL_MAX_OFFSET = 0.95f - PUPIL_RADIUS;
     private static final float IMAGE_SCALE = 1.1f;
@@ -54,27 +55,27 @@ public class GooglyEye {
         this.y = y + config.y * scale;
         this.radius = config.size * scale;
     }
-    public void update(float x, float y, float scale, boolean animate) {
+    public void update(float x, float y, float scale, boolean animate, float mouseFactor) {
         float newX = x + config.x * scale;
         float newY = y + config.y * scale;
-        updateInternal(newX, newY, scale, animate);
+        updateInternal(newX, newY, scale, animate, mouseFactor);
     }
 
     public void update(float tx, float ty, float offsetX, float offsetY, float angle, float scale) {
-        update(tx,ty,offsetX,offsetY,angle,scale,true);
+        update(tx,ty,offsetX,offsetY,angle,scale,true,0.f);
     }
     public void updatePosition(float tx, float ty, float offsetX, float offsetY, float angle, float scale) {
-        update(tx,ty,offsetX,offsetY,angle,scale,false);
+        update(tx,ty,offsetX,offsetY,angle,scale,false,0.f);
     }
-    public void update(float tx, float ty, float offsetX, float offsetY, float angle, float scale, boolean animate) {
+    public void update(float tx, float ty, float offsetX, float offsetY, float angle, float scale, boolean animate, float mouseFactor) {
         offsetX += config.x * scale;
         offsetY += config.y * scale;
         float newX = tx + MathUtils.cosDeg(angle) * offsetX - MathUtils.sinDeg(angle) * offsetY;
         float newY = ty + MathUtils.sinDeg(angle) * offsetX + MathUtils.cosDeg(angle) * offsetY;
-        updateInternal(newX, newY, scale, animate);
+        updateInternal(newX, newY, scale, animate, mouseFactor);
     }
 
-    protected void updateInternal(float newX, float newY, float scale, boolean animate) {
+    protected void updateInternal(float newX, float newY, float scale, boolean animate, float mouseFactor) {
         if (!animate) {
             this.radius = config.size * scale;
             this.x = newX;
@@ -147,7 +148,7 @@ public class GooglyEye {
         // Friction
         if (EYE_ACCELARATION || EYE_BLEND > 0.0f) {
             float v = (float)Math.sqrt(vx*vx + vy*vy);
-            float scaleV = Math.max(0.f, 1.0f - FRICTION_EYE * radius * t / Math.min(radius*FRICTION_VELOCITY,Math.max(v,1e-5f)));
+            float scaleV = Math.max(0.f, 1.0f - FRICTION_EYE * radius * t / Math.max(Math.min(radius*FRICTION_VELOCITY,v),1e-5f));
             vx *= scaleV;
             vy *= scaleV;
         }
@@ -177,9 +178,20 @@ public class GooglyEye {
         pupilVx -= (newVx - vx) * VELOCITY_PUPIL;
         pupilVy -= (newVy - vy) * VELOCITY_PUPIL;
 
+        // Mouse moving the pupil
+        if (mouseFactor > 0.f && radius > 0.f) {
+            float dmx = (InputHelper.mX - mX) / Settings.WIDTH / t;
+            float dmy = (InputHelper.mY - mY) / Settings.WIDTH / t;
+            float dm = 1.0f;//(float)Math.sqrt(dmx*dmx + dmy*dmy); // faster movement => more effect
+            pupilVx += mouseFactor * radius * dmx * dm;
+            pupilVy += mouseFactor * radius * dmy * dm;
+        }
+        mX = InputHelper.mX;
+        mY = InputHelper.mY;
+
         // Pupil friction
         float pv = (float)Math.sqrt(pupilVx*pupilVx + pupilVy*pupilVy);
-        float scalePV = Math.max(0.f, 1.0f - FRICTION_PUPIL * radius * t / Math.min(radius*FRICTION_VELOCITY,Math.max(pv,1e-5f)));
+        float scalePV = Math.max(0.f, 1.0f - FRICTION_PUPIL * radius * t / Math.max(Math.min(radius*FRICTION_VELOCITY,pv),1e-5f));
         pupilVx *= scalePV;
         pupilVy *= scalePV;
 

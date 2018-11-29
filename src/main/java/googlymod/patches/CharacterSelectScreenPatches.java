@@ -68,8 +68,7 @@ public class CharacterSelectScreenPatches {
             float bg_y_offset = Settings.isSixteenByTen ? 0 : (float)ReflectionHacks.getPrivate(self, CharacterSelectScreen.class, "bg_y_offset");
             float drawX = (float)Settings.WIDTH / 2.0f - 960 * Settings.scale;
             float drawY = (float)Settings.HEIGHT / 2.0f - 600 * Settings.scale + bg_y_offset;
-            GooglyEyeHelpers.updateEyesPosition(EyeFields.eyes.get(self), drawX, drawY, Settings.scale);
-            GooglyEyeHelpers.updateEyesForCursor(EyeFields.eyes.get(self));
+            GooglyEyeHelpers.updateEyes(EyeFields.eyes.get(self), drawX, drawY, Settings.scale, true, 0.5f);
             // Editing
             if (Settings.isDebug) {
                 updateEdit(self);

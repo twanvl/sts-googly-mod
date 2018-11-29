@@ -17,11 +17,14 @@ public class GooglyEyeOnBone extends GooglyEye {
     }
 
     public void update(Skeleton skeleton, boolean animate) {
+        update(skeleton, animate, 0.1f);
+    }
+    public void update(Skeleton skeleton, boolean animate, float mouseFactor) {
         if (bone == null) return;
         GooglyEyeConfig.CreatureEye config = getConfig();
         Vector2 coord = bone.localToWorld(new Vector2(config.x, config.y));
         float scale = bone.getWorldScaleX();
-        updateInternal(skeleton.getX() + coord.x, skeleton.getY() + coord.y, scale, animate);
+        updateInternal(skeleton.getX() + coord.x, skeleton.getY() + coord.y, scale, animate, mouseFactor);
     }
 
     public GooglyEyeConfig.CreatureEye getConfig() {

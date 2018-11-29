@@ -30,6 +30,13 @@ public class GooglyEyeHelpers {
         }
     }
 
+    public static void updateEyes(ArrayList<GooglyEye> eyes, float x, float y, float scale, boolean animate, float mouseFactor) {
+        if (eyes == null) return;
+        for (GooglyEye eye : eyes) {
+            eye.update(x,y,scale,animate,mouseFactor);
+        }
+    }
+
     public static void updateEyesPosition(ArrayList<GooglyEye> eyes, float x, float y, float scale) {
         if (eyes == null) return;
         for (GooglyEye eye : eyes) {
