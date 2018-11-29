@@ -189,7 +189,7 @@ public class GooglyEye {
 
         // constrain pupil
         float pupilD = (float)Math.sqrt(pupilX*pupilX + pupilY*pupilY);
-        if (pupilD > radius * PUPIL_MAX_OFFSET) {
+        if (pupilD > radius * PUPIL_MAX_OFFSET && pupilD > 1e-6f) {
             float pupilVradial = (pupilVx * pupilX + pupilVy * pupilY) / pupilD;
             pupilVx -= pupilVradial * pupilX/pupilD;
             pupilVy -= pupilVradial * pupilY/pupilD;
