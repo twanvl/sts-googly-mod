@@ -5,3 +5,6 @@ dependency-reduced-pom.xml
 .settings
 .vscode
 target
+steam_resources/content
+steam_resources/image.jpg
+steam_appid.txt
