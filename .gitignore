@@ -7,4 +7,5 @@ dependency-reduced-pom.xml
 target
 steam_resources/content
 steam_resources/image.jpg
+sendToDevs
 steam_appid.txt
