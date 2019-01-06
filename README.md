@@ -2,19 +2,28 @@
 
 Makes the game infinitely better.
 
-## Improving custom cards ##
+## Googly eyes for modded content ##
 
-In the card library, enable debug mode (using Basemod's `debug true` command).
+Mod authors can add googly eyes to their own cards, relics, creatures and events.
+
+To edit the googly eyes, enable debug mode (using Basemod's `debug true` command). Then
 * Click on the image to add a googly eye.
 * Drag to move,
 * right click to remove an eye,
 * and hold shift to resize.
 
-This creates a file `googly-eye-locations.json` in the .
+Cards and relic googly eyes can be edited in the library.
+Creature and event googly eyes can be edited in debug mode while playing the game.
+
+Editing the googly eyes creates a file `googly-eye-locations.json` in the Slay the Spire directory.
 You can include this file in your own mod's resources (next to ModTheSpire.json).
+
 Please submit changes to the googly-eye-locations for the base game by creating a github issue.
 
 ## Installation ##
+The googly eye mod can be installed from the steam workshop.
+
+Manual installation:
 1. [Download `ModTheSpire.jar`](https://github.com/kiooeht/ModTheSpire/releases)
 2. Move `ModTheSpire.jar` into your **Slay The Spire** directory. This directory is likely to be found under `C:\Program Files (x86)\Steam\steamapps\common\SlayTheSpire`.
 3. Create a `mods` folder in your **Slay The Spire** directory
