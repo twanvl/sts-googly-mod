@@ -11,6 +11,7 @@ import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
+import com.megacrit.cardcrawl.monsters.city.Byrd;
 
 import basemod.ReflectionHacks;
 import googlymod.helpers.GooglyEye;
@@ -62,7 +63,7 @@ public class AbstractCreaturePatches {
                     EyeFields.eyes.set(creature, eyes);
                     EyeFields.eyesOther.set(creature, eyes);
                 } else {
-                    GooglyEyeHelpers.updateEyes(eyes, drawX, drawY,0,0,0, Settings.scale);
+                    GooglyEyeHelpers.updateEyes(eyes, drawX, drawY, Settings.scale, true, 0.2f);
                 }
                 if (Settings.isDebug) {
                     GooglyEyeEditor.updateEdit(drawX,drawY,Settings.scale,0,0,creature.hb.width,creature.hb.height, eyes, (configs) -> {
@@ -83,6 +84,17 @@ public class AbstractCreaturePatches {
             if (!creature.isDead && !creature.escaped) {
                 GooglyEyeHelpers.renderEyes(EyeFields.eyes.get(creature), sb, creature.tint.color);
             }
+        }
+    }
+
+    @SpirePatch(clz=Byrd.class, method="changeState")
+    public static class ChangeState {
+        public static void Postfix(AbstractCreature creature, String stateName) {
+            // Re initializes the googly eyes after the state has changed
+            Skeleton skeleton = (Skeleton)ReflectionHacks.getPrivate(creature,AbstractCreature.class,"skeleton");
+            ArrayList<GooglyEyeOnBone> eyes = GooglyEyeHelpers.initEyes(GooglyEyeConfig.getCreatureEyes(creature.id), skeleton);
+            EyeFields.eyes.set(creature, eyes);
+            EyeFields.eyesOnBone.set(creature, eyes);
         }
     }
 }
