@@ -1,3 +1,6 @@
+### v1.4.0
+* Googly eyes on more monsters
+
 ### v1.3.0
 * 20% more googly
 * Fix division by 0 in pupil positioning code
