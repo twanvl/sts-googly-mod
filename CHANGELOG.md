@@ -1,5 +1,6 @@
 ### v1.4.0
 * Googly eyes on more monsters
+* Fix floating googly eyes on Byrd
 
 ### v1.3.0
 * 20% more googly
