@@ -3252,6 +3252,20 @@
       }
     ]
   },
+  "creaturesStatic": {
+    "Hexaghost": [
+      {
+        "x": -46.5,
+        "y": 275,
+        "size": 25
+      },
+      {
+        "x": 24.0,
+        "y": 275,
+        "size": 25
+      }
+    ]
+  },
   "events": {
     "images/events/addict.jpg": [
       {

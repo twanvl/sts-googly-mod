@@ -14,7 +14,7 @@ public class GooglyEyeOnBoneEditor {
     static GooglyEyeOnBone activeEye = null;
     static Skeleton activeSkeleton = null;
 
-    public static void updateEdit(Skeleton skeleton, ArrayList<GooglyEyeOnBone> eyes, Consumer<ArrayList<GooglyEyeConfig.CreatureEye>> saveConfigs) {
+    public static void updateEdit(Skeleton skeleton, ArrayList<GooglyEyeOnBone> eyes, Consumer<ArrayList<GooglyEyeConfig.EyeLocationOnBone>> saveConfigs) {
         if (eyes == null) return;
         // bounds
         Vector2 minBound = new Vector2(), sizeBound = new Vector2();
@@ -54,14 +54,14 @@ public class GooglyEyeOnBoneEditor {
             // transform to local
             Vector2 local = nearestBone.worldToLocal(world);
             // add eye
-            GooglyEyeConfig.CreatureEye config = new GooglyEyeConfig.CreatureEye(local.x, local.y, 25.f, nearestBone.getData().getName());
+            GooglyEyeConfig.EyeLocationOnBone config = new GooglyEyeConfig.EyeLocationOnBone(local.x, local.y, 25.f, nearestBone.getData().getName());
             eyes.add(new GooglyEyeOnBone(config, skeleton));
             activeEye = null;
             activeSkeleton = null;
             saveConfig(eyes, saveConfigs);
         }
         if (activeEye != null && activeSkeleton == skeleton) {
-            GooglyEyeConfig.CreatureEye config = activeEye.getConfig();
+            GooglyEyeConfig.EyeLocationOnBone config = activeEye.getConfig();
             Vector2 world = new Vector2(InputHelper.mX - skeleton.getX(), InputHelper.mY - skeleton.getY());
             Vector2 local = activeEye.bone.worldToLocal(world);
             if (Gdx.input.isKeyPressed(Keys.SHIFT_LEFT) || Gdx.input.isKeyPressed(Keys.SHIFT_RIGHT)) {
@@ -84,8 +84,8 @@ public class GooglyEyeOnBoneEditor {
         }
     }
 
-    private static void saveConfig(ArrayList<GooglyEyeOnBone> eyes, Consumer<ArrayList<GooglyEyeConfig.CreatureEye>> saveConfigs) {
-        ArrayList<GooglyEyeConfig.CreatureEye> configs = new ArrayList<>();
+    private static void saveConfig(ArrayList<GooglyEyeOnBone> eyes, Consumer<ArrayList<GooglyEyeConfig.EyeLocationOnBone>> saveConfigs) {
+        ArrayList<GooglyEyeConfig.EyeLocationOnBone> configs = new ArrayList<>();
         for (GooglyEyeOnBone eye : eyes) {
             configs.add(eye.getConfig());
         }

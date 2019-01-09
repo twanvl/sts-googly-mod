@@ -1,7 +1,7 @@
 {
   "steamPublishedID": "1615430126",
   "title": "Googly Eyes",
-  "description": "Adds googly eyes to the game.",
+  "description": "Adds googly eyes to the game.\n\nFor mod authors: see the github page for how to add googly eyes to your mod.\n\nhttps://github.com/twanvl/sts-googly-mod/",
   "visibility": "public",
   "changeNote": "",
   "tags": [

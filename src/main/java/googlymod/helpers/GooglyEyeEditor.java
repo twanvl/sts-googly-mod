@@ -10,7 +10,7 @@ import com.megacrit.cardcrawl.helpers.input.InputHelper;
 public class GooglyEyeEditor {
     static GooglyEye activeEye = null;
 
-    public static void updateEdit(float drawX, float drawY, float scale, float minX, float minY, float maxX, float maxY, ArrayList<GooglyEye> eyes, Consumer<ArrayList<GooglyEyeConfig.CardEye>> saveConfigs) {
+    public static void updateEdit(float drawX, float drawY, float scale, float minX, float minY, float maxX, float maxY, ArrayList<GooglyEye> eyes, Consumer<ArrayList<GooglyEyeConfig.EyeLocation>> saveConfigs) {
         if (eyes == null) return;
         float x = (InputHelper.mX - drawX) / scale;
         float y = (InputHelper.mY - drawY) / scale;
@@ -32,13 +32,13 @@ public class GooglyEyeEditor {
             return;
         } else if (InputHelper.justClickedLeft && x >= minX && y >= minY && x <= maxX && y <= maxY && activeEye == null) {
             // add eye
-            GooglyEyeConfig.CardEye config = new GooglyEyeConfig.CardEye(x, y, 25.f);
+            GooglyEyeConfig.EyeLocation config = new GooglyEyeConfig.EyeLocation(x, y, 25.f);
             eyes.add(new GooglyEye(config, drawX,drawY,scale));
             activeEye = null;
             saveConfig(eyes, saveConfigs);
         }
         if (activeEye != null) {
-            GooglyEyeConfig.CardEye config = activeEye.config;
+            GooglyEyeConfig.EyeLocation config = activeEye.config;
             if (Gdx.input.isKeyPressed(Keys.SHIFT_LEFT) || Gdx.input.isKeyPressed(Keys.SHIFT_RIGHT)) {
                 // change radius
                 float dx = x - config.x;
@@ -59,8 +59,8 @@ public class GooglyEyeEditor {
         }
     }
 
-    private static void saveConfig(ArrayList<GooglyEye> eyes, Consumer<ArrayList<GooglyEyeConfig.CardEye>> saveConfigs) {
-        ArrayList<GooglyEyeConfig.CardEye> configs = new ArrayList<>();
+    private static void saveConfig(ArrayList<GooglyEye> eyes, Consumer<ArrayList<GooglyEyeConfig.EyeLocation>> saveConfigs) {
+        ArrayList<GooglyEyeConfig.EyeLocation> configs = new ArrayList<>();
         for (GooglyEye eye : eyes) {
             configs.add(eye.config);
         }

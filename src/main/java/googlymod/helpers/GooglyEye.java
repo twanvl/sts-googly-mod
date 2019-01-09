@@ -9,7 +9,7 @@ import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.helpers.input.InputHelper;
 
 public class GooglyEye {
-    protected GooglyEyeConfig.CardEye config;
+    protected GooglyEyeConfig.EyeLocation config;
     float x, y, radius;
     float pupilX = 0.f, pupilY = 0.f;
     float vx, vy, pupilVx, pupilVy;
@@ -34,11 +34,11 @@ public class GooglyEye {
         return retVal;
     }
 
-    public GooglyEye(GooglyEyeConfig.CardEye config, float x, float y, float scale) {
+    public GooglyEye(GooglyEyeConfig.EyeLocation config, float x, float y, float scale) {
         this.config = config;
         updatePosition(x,y,scale);
     }
-    public GooglyEye(GooglyEyeConfig.CardEye config, float x, float y, float offsetX,float offsetY, float angle, float scale) {
+    public GooglyEye(GooglyEyeConfig.EyeLocation config, float x, float y, float offsetX,float offsetY, float angle, float scale) {
         this.config = config;
         updatePosition(x,y,offsetX,offsetY,angle,scale);
     }

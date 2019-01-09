@@ -17,19 +17,19 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 public class GooglyEyeConfig {
-    public static class CardEye {
+    public static class EyeLocation {
         public float x, y, size;
-        public CardEye() {}
-        public CardEye(float x, float y, float size) {
+        public EyeLocation() {}
+        public EyeLocation(float x, float y, float size) {
             this.x = x;
             this.y = y;
             this.size = size;
         }
     }
-    public static class CreatureEye extends CardEye {
+    public static class EyeLocationOnBone extends EyeLocation {
         public String bone;
-        public CreatureEye() {}
-        public CreatureEye(float x, float y, float size, String bone) {
+        public EyeLocationOnBone() {}
+        public EyeLocationOnBone(float x, float y, float size, String bone) {
             this.x = x;
             this.y = y;
             this.size = size;
@@ -37,22 +37,24 @@ public class GooglyEyeConfig {
         }
     }
 
-    public HashMap<String,ArrayList<CardEye>> cards = new HashMap<>();
-    public HashMap<String,ArrayList<CardEye>> relics = new HashMap<>();
-    public HashMap<String,ArrayList<CardEye>> events = new HashMap<>();
-    public HashMap<String,ArrayList<CardEye>> charSelect = new HashMap<>();
-    public HashMap<String,ArrayList<CreatureEye>> creatures = new HashMap<>();
+    public HashMap<String,ArrayList<EyeLocation>> cards = new HashMap<>();
+    public HashMap<String,ArrayList<EyeLocation>> relics = new HashMap<>();
+    public HashMap<String,ArrayList<EyeLocation>> events = new HashMap<>();
+    public HashMap<String,ArrayList<EyeLocation>> charSelect = new HashMap<>();
+    public HashMap<String,ArrayList<EyeLocationOnBone>> creatures = new HashMap<>();
+    public HashMap<String,ArrayList<EyeLocation>> creaturesStatic = new HashMap<>();
 
     // Global configuration
     private static GooglyEyeConfig theConfig;
     // Edited configuration
     // Note: use TreeMap to get sorted json files
     private static class EditedConfig {
-        public TreeMap<String,ArrayList<CardEye>> cards = new TreeMap<>();
-        public TreeMap<String,ArrayList<CardEye>> relics = new TreeMap<>();
-        public TreeMap<String,ArrayList<CardEye>> events = new TreeMap<>();
-        public TreeMap<String,ArrayList<CardEye>> charSelect = new TreeMap<>();
-        public TreeMap<String,ArrayList<CreatureEye>> creatures = new TreeMap<>();
+        public TreeMap<String,ArrayList<EyeLocation>> cards = new TreeMap<>();
+        public TreeMap<String,ArrayList<EyeLocation>> relics = new TreeMap<>();
+        public TreeMap<String,ArrayList<EyeLocation>> events = new TreeMap<>();
+        public TreeMap<String,ArrayList<EyeLocation>> charSelect = new TreeMap<>();
+        public TreeMap<String,ArrayList<EyeLocationOnBone>> creatures = new TreeMap<>();
+        public TreeMap<String,ArrayList<EyeLocation>> creaturesStatic = new TreeMap<>();
 
         private void save() {
             try {
@@ -66,8 +68,8 @@ public class GooglyEyeConfig {
     }
     static EditedConfig editedConfig = new EditedConfig();
 
-    private static ArrayList<CardEye> noEyes = new ArrayList<>();
-    private static ArrayList<CreatureEye> noCreatureEyes = new ArrayList<>();
+    private static ArrayList<EyeLocation> noEyes = new ArrayList<>();
+    private static ArrayList<EyeLocationOnBone> noEyesOnBone = new ArrayList<>();
 
     private void merge(GooglyEyeConfig config) {
         cards.putAll(config.cards);
@@ -75,6 +77,7 @@ public class GooglyEyeConfig {
         events.putAll(config.events);
         charSelect.putAll(config.charSelect);
         creatures.putAll(config.creatures);
+        creaturesStatic.putAll(config.creaturesStatic);
     }
 
     static Gson gson;
@@ -124,48 +127,57 @@ public class GooglyEyeConfig {
         }
     }
 
-    public static ArrayList<CardEye> getCardEyes(String cardId) {
+    public static ArrayList<EyeLocation> getCardEyes(String cardId) {
         return theConfig.cards.getOrDefault(cardId, noEyes);
     }
-    public static void setCardEyes(String cardId, ArrayList<CardEye> eyes) {
+    public static void setCardEyes(String cardId, ArrayList<EyeLocation> eyes) {
         theConfig.cards.put(cardId, eyes);
         editedConfig.cards.put(cardId, eyes);
         editedConfig.save();
     }
 
-    public static ArrayList<CardEye> getRelicEyes(String relicId) {
+    public static ArrayList<EyeLocation> getRelicEyes(String relicId) {
         return theConfig.relics.getOrDefault(relicId, noEyes);
     }
-    public static void setRelicEyes(String relicId, ArrayList<CardEye> eyes) {
+    public static void setRelicEyes(String relicId, ArrayList<EyeLocation> eyes) {
         theConfig.relics.put(relicId, eyes);
         editedConfig.relics.put(relicId, eyes);
         editedConfig.save();
     }
 
-    public static ArrayList<CardEye> getCharSelectEyes(String playerClass) {
+    public static ArrayList<EyeLocation> getCharSelectEyes(String playerClass) {
         return theConfig.charSelect.getOrDefault(playerClass, noEyes);
     }
-    public static void setCharSelectEyes(String playerClass, ArrayList<CardEye> eyes) {
+    public static void setCharSelectEyes(String playerClass, ArrayList<EyeLocation> eyes) {
         theConfig.charSelect.put(playerClass, eyes);
         editedConfig.charSelect.put(playerClass, eyes);
         editedConfig.save();
     }
 
-    public static ArrayList<CardEye> getEventEyes(String eventImage) {
+    public static ArrayList<EyeLocation> getEventEyes(String eventImage) {
         return theConfig.events.getOrDefault(eventImage, noEyes);
     }
-    public static void setEventEyes(String eventImage, ArrayList<CardEye> eyes) {
+    public static void setEventEyes(String eventImage, ArrayList<EyeLocation> eyes) {
         theConfig.events.put(eventImage, eyes);
         editedConfig.events.put(eventImage, eyes);
         editedConfig.save();
     }
 
-    public static ArrayList<CreatureEye> getCreatureEyes(String skeletonPath) {
-        return theConfig.creatures.getOrDefault(skeletonPath, noCreatureEyes);
+    public static ArrayList<EyeLocationOnBone> getCreatureEyes(String skeletonPath) {
+        return theConfig.creatures.getOrDefault(skeletonPath, noEyesOnBone);
     }
-    public static void setCreatureEyes(String eventImage, ArrayList<CreatureEye> eyes) {
+    public static void setCreatureEyes(String eventImage, ArrayList<EyeLocationOnBone> eyes) {
         theConfig.creatures.put(eventImage, eyes);
         editedConfig.creatures.put(eventImage, eyes);
+        editedConfig.save();
+    }
+
+    public static ArrayList<EyeLocation> getStaticCreatureEyes(String creatureId) {
+        return theConfig.creaturesStatic.getOrDefault(creatureId, noEyes);
+    }
+    public static void setStaticCreatureEyes(String creatureId, ArrayList<EyeLocation> eyes) {
+        theConfig.creaturesStatic.put(creatureId, eyes);
+        editedConfig.creaturesStatic.put(creatureId, eyes);
         editedConfig.save();
     }
 }

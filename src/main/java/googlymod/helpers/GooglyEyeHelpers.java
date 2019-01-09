@@ -7,17 +7,17 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.esotericsoftware.spine.Skeleton;
 
 public class GooglyEyeHelpers {
-    public static ArrayList<GooglyEye> initEyes(ArrayList<GooglyEyeConfig.CardEye> configs, float originX,float originY, float offsetX, float offsetY, float angle, float scale) {
+    public static ArrayList<GooglyEye> initEyes(ArrayList<GooglyEyeConfig.EyeLocation> configs, float originX,float originY, float offsetX, float offsetY, float angle, float scale) {
         ArrayList<GooglyEye> eyes = new ArrayList<>();
-        for (GooglyEyeConfig.CardEye config : configs) {
+        for (GooglyEyeConfig.EyeLocation config : configs) {
             eyes.add(new GooglyEye(config, originX, originY, offsetX, offsetY, angle, scale));
         }
         return eyes;
     }
 
-    public static ArrayList<GooglyEyeOnBone> initEyes(ArrayList<GooglyEyeConfig.CreatureEye> configs, Skeleton skeleton) {
+    public static ArrayList<GooglyEyeOnBone> initEyes(ArrayList<GooglyEyeConfig.EyeLocationOnBone> configs, Skeleton skeleton) {
         ArrayList<GooglyEyeOnBone> eyes = new ArrayList<>();
-        for (GooglyEyeConfig.CreatureEye config : configs) {
+        for (GooglyEyeConfig.EyeLocationOnBone config : configs) {
             eyes.add(new GooglyEyeOnBone(config, skeleton));
         }
         return eyes;

@@ -7,7 +7,7 @@ import com.esotericsoftware.spine.Skeleton;
 public class GooglyEyeOnBone extends GooglyEye {
     Bone bone;
 
-    public GooglyEyeOnBone(GooglyEyeConfig.CreatureEye config, Skeleton skeleton) {
+    public GooglyEyeOnBone(GooglyEyeConfig.EyeLocationOnBone config, Skeleton skeleton) {
         super(config,0,0,0);
         bone = skeleton.findBone(config.bone);
         if (bone == null) {
@@ -21,13 +21,13 @@ public class GooglyEyeOnBone extends GooglyEye {
     }
     public void update(Skeleton skeleton, boolean animate, float mouseFactor) {
         if (bone == null) return;
-        GooglyEyeConfig.CreatureEye config = getConfig();
+        GooglyEyeConfig.EyeLocationOnBone config = getConfig();
         Vector2 coord = bone.localToWorld(new Vector2(config.x, config.y));
         float scale = bone.getWorldScaleX();
         updateInternal(skeleton.getX() + coord.x, skeleton.getY() + coord.y, scale, animate, mouseFactor);
     }
 
-    public GooglyEyeConfig.CreatureEye getConfig() {
-        return (GooglyEyeConfig.CreatureEye)this.config;
+    public GooglyEyeConfig.EyeLocationOnBone getConfig() {
+        return (GooglyEyeConfig.EyeLocationOnBone)this.config;
     }
 }
