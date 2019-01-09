@@ -1,6 +1,7 @@
 ### v1.4.0
 * Googly eyes on more monsters
 * Fix floating googly eyes on Byrd
+* Fix eye appearing when Darkling blinks
 
 ### v1.3.0
 * 20% more googly
