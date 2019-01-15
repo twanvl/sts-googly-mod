@@ -29,7 +29,7 @@ public class AbstractRelicPatches {
             if (eyes == null) {
                 EyeFields.eyes.set(relic, GooglyEyeHelpers.initEyes(GooglyEyeConfig.getRelicEyes(relic.relicId), x,y,0,0,0,scale));
             } else {
-                GooglyEyeHelpers.updateEyes(eyes, x,y,0,0,0,scale);
+                GooglyEyeHelpers.updateEyes(eyes, x,y,scale,true,0.01f);
             }
         }
     }

@@ -9,6 +9,7 @@ import com.megacrit.cardcrawl.helpers.input.InputHelper;
 
 public class GooglyEyeEditor {
     static GooglyEye activeEye = null;
+    static ArrayList<GooglyEye> activeEyes = null;
 
     public static void updateEdit(float drawX, float drawY, float scale, float minX, float minY, float maxX, float maxY, ArrayList<GooglyEye> eyes, Consumer<ArrayList<GooglyEyeConfig.EyeLocation>> saveConfigs) {
         if (eyes == null) return;
@@ -26,18 +27,21 @@ public class GooglyEyeEditor {
             // remove eye
             eyes.remove(hoveredEye);
             activeEye = null;
+            activeEyes = null;
             saveConfig(eyes, saveConfigs);
         } else if (InputHelper.justClickedLeft && hoveredEye != null) {
             activeEye = hoveredEye;
+            activeEyes = eyes;
             return;
         } else if (InputHelper.justClickedLeft && x >= minX && y >= minY && x <= maxX && y <= maxY && activeEye == null) {
             // add eye
             GooglyEyeConfig.EyeLocation config = new GooglyEyeConfig.EyeLocation(x, y, 25.f);
             eyes.add(new GooglyEye(config, drawX,drawY,scale));
             activeEye = null;
+            activeEyes = null;
             saveConfig(eyes, saveConfigs);
         }
-        if (activeEye != null) {
+        if (activeEye != null && activeEyes == eyes) {
             GooglyEyeConfig.EyeLocation config = activeEye.config;
             if (Gdx.input.isKeyPressed(Keys.SHIFT_LEFT) || Gdx.input.isKeyPressed(Keys.SHIFT_RIGHT)) {
                 // change radius
