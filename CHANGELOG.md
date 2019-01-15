@@ -1,3 +1,6 @@
+### v1.6.0
+* Googly eyes on orbs
+
 ### v1.5.0
 * Fix scaling of googly eyes on creatures
 * Add lots more googly eyes to creatures
