@@ -2986,6 +2986,84 @@
         "size": 30
       }
     ],
+    "AcidSlime_L": [
+      {
+        "bone": "eye1",
+        "x": 0,
+        "y": 0,
+        "size": 10
+      },
+      {
+        "bone": "eye2",
+        "x": 0,
+        "y": 0,
+        "size": 10
+      },
+      {
+        "bone": "eye3",
+        "x": 0,
+        "y": 0,
+        "size": 10
+      },
+      {
+        "bone": "eye4",
+        "x": 0,
+        "y": 0,
+        "size": 10
+      },
+      {
+        "bone": "eye5",
+        "x": 0,
+        "y": 0,
+        "size": 10
+      },
+      {
+        "bone": "eye6",
+        "x": 0,
+        "y": 0,
+        "size": 10
+      },
+      {
+        "bone": "eye7",
+        "x": 0,
+        "y": 0,
+        "size": 10
+      }
+    ],
+    "AcidSlime_M": [
+      {
+        "bone": "eye1",
+        "x": 0,
+        "y": 0,
+        "size": 10
+      },
+      {
+        "bone": "eye2",
+        "x": 0,
+        "y": 0,
+        "size": 10
+      },
+      {
+        "bone": "eye3",
+        "x": 0,
+        "y": 0,
+        "size": 10
+      },
+      {
+        "bone": "eye4",
+        "x": 0,
+        "y": 0,
+        "size": 10
+      }
+    ],
+    "AcidSlime_S": [
+      {
+        "bone": "eye",
+        "x": 0,
+        "y": 0,
+        "size": 10
+      }
+    ],
     "AwakenedOne": [
       {
         "bone": "Light",
@@ -3008,6 +3086,20 @@
         "x": -11.68911405,
         "y": 11.4548745,
         "size": 11.348712
+      }
+    ],
+    "Dagger": [
+      {
+        "bone": "Glow",
+        "x": 8.0688925,
+        "y": 32.45729,
+        "size": 11
+      },
+      {
+        "bone": "Glow",
+        "x": 23.162155,
+        "y": -1.7895205,
+        "size": 11
       }
     ],
     "Darkling": [
@@ -3092,6 +3184,34 @@
         "size": 9.66473655
       }
     ],
+    "GiantHead": [
+      {
+        "bone": "el1",
+        "x": -3.2399726,
+        "y": -5.7100124,
+        "size": 31.64253
+      },
+      {
+        "bone": "el2",
+        "x": -2.5399525,
+        "y": 1.769989,
+        "size": 31.64253
+      }
+    ],
+    "GremlinLeader": [
+      {
+        "bone": "Eye_L",
+        "x": 3.5579305,
+        "y": 1.2710556,
+        "size": 12
+      },
+      {
+        "bone": "Eye_R",
+        "x": -1.2839048,
+        "y": 0.13267952,
+        "size": 12
+      }
+    ],
     "GremlinNob": [
       {
         "bone": "eyes",
@@ -3104,6 +3224,34 @@
         "x": -12.419976000000002,
         "y": -2.9615250000000004,
         "size": 11.4682545
+      }
+    ],
+    "GremlinThief": [
+      {
+        "bone": "head",
+        "x": 4.465087,
+        "y": -3.8027422,
+        "size": 6.5
+      },
+      {
+        "bone": "eyes",
+        "x": -5.818963,
+        "y": 0.28705248,
+        "size": 6.5
+      }
+    ],
+    "GremlinWizard": [
+      {
+        "bone": "head",
+        "x": 4.3389015,
+        "y": -6.460432,
+        "size": 6
+      },
+      {
+        "bone": "eyes",
+        "x": -5.5255404,
+        "y": -1.3783715,
+        "size": 6
       }
     ],
     "IRONCLAD": [
@@ -3197,15 +3345,81 @@
         "size": 19.644492
       }
     ],
+    "Reptomancer": [
+      {
+        "bone": "HairBack_",
+        "x": -7.210485,
+        "y": -10.024794,
+        "size": 8.652619
+      },
+      {
+        "bone": "HairBack_",
+        "x": -7.1862893,
+        "y": 7.0185585,
+        "size": 10
+      }
+    ],
     "Sentry": [],
+    "Shelled Parasite": [
+      {
+        "bone": "hips",
+        "x": -47.36508,
+        "y": 54.04268,
+        "size": 22.0
+      },
+      {
+        "bone": "hips",
+        "x": 24.384098,
+        "y": 41.54001,
+        "size": 22.0
+      }
+    ],
     "SlaverBlue": [],
     "SlaverRed": [],
+    "SlimeBoss": [
+      {
+        "bone": "eyeleft",
+        "x": -5,
+        "y": 21,
+        "size": 51
+      },
+      {
+        "bone": "eyeright",
+        "x": 12,
+        "y": 15,
+        "size": 51
+      }
+    ],
     "Snecko": [
       {
         "bone": "eye",
         "x": 0,
         "y": 0,
         "size": 13.5
+      }
+    ],
+    "SpikeSlime_L": [
+      {
+        "bone": "eyeball",
+        "x": 1.5,
+        "y": 5,
+        "size": 18
+      }
+    ],
+    "SpikeSlime_M": [
+      {
+        "bone": "eye",
+        "x": 0,
+        "y": 0,
+        "size": 15
+      }
+    ],
+    "SpikeSlime_S": [
+      {
+        "bone": "eye",
+        "x": 0,
+        "y": 2,
+        "size": 10
       }
     ],
     "TheCollector": [],

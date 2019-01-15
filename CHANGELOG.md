@@ -1,3 +1,7 @@
+### v1.5.0
+* Fix scaling of googly eyes on creatures
+* Add lots more googly eyes to creatures
+
 ### v1.4.0
 * Googly eyes on more monsters
 * Fix floating googly eyes on Byrd
