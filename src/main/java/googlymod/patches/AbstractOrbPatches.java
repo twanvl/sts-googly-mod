@@ -13,6 +13,7 @@ import com.megacrit.cardcrawl.orbs.AbstractOrb;
 import com.megacrit.cardcrawl.relics.AbstractRelic;
 import com.megacrit.cardcrawl.rooms.AbstractRoom;
 import com.megacrit.cardcrawl.rooms.MonsterRoom;
+import com.megacrit.cardcrawl.vfx.BobEffect;
 
 import basemod.ReflectionHacks;
 import googlymod.helpers.GooglyEye;
@@ -29,8 +30,9 @@ public class AbstractOrbPatches {
     @SpirePatch(clz=AbstractOrb.class, method="update")
     public static class Update {
         public static void Postfix(AbstractOrb orb) {
+            BobEffect bobEffect = (BobEffect)ReflectionHacks.getPrivate(orb,AbstractOrb.class,"bobEffect");
             float x = orb.cX;
-            float y = orb.cY;
+            float y = orb.cY + bobEffect.y;
             float scale = (float)ReflectionHacks.getPrivate(orb,AbstractOrb.class,"scale");
             ArrayList<GooglyEye> eyes = EyeFields.eyes.get(orb);
             if (eyes == null) {
