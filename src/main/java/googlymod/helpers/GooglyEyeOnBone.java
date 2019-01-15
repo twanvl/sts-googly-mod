@@ -3,6 +3,7 @@ package googlymod.helpers;
 import com.badlogic.gdx.math.Vector2;
 import com.esotericsoftware.spine.Bone;
 import com.esotericsoftware.spine.Skeleton;
+import com.megacrit.cardcrawl.core.Settings;
 
 public class GooglyEyeOnBone extends GooglyEye {
     Bone bone;
@@ -22,8 +23,8 @@ public class GooglyEyeOnBone extends GooglyEye {
     public void update(Skeleton skeleton, boolean animate, float mouseFactor) {
         if (bone == null) return;
         GooglyEyeConfig.EyeLocationOnBone config = getConfig();
-        Vector2 coord = bone.localToWorld(new Vector2(config.x, config.y));
-        float scale = bone.getWorldScaleX();
+        Vector2 coord = bone.localToWorld(new Vector2(config.x * Settings.scale, config.y * Settings.scale));
+        float scale = bone.getWorldScaleX() * Settings.scale;
         updateInternal(skeleton.getX() + coord.x, skeleton.getY() + coord.y, scale, animate, mouseFactor);
     }
 

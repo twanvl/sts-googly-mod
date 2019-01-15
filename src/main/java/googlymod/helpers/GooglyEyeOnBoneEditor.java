@@ -8,6 +8,7 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.math.Vector2;
 import com.esotericsoftware.spine.Bone;
 import com.esotericsoftware.spine.Skeleton;
+import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.helpers.input.InputHelper;
 
 public class GooglyEyeOnBoneEditor {
@@ -54,7 +55,7 @@ public class GooglyEyeOnBoneEditor {
             // transform to local
             Vector2 local = nearestBone.worldToLocal(world);
             // add eye
-            GooglyEyeConfig.EyeLocationOnBone config = new GooglyEyeConfig.EyeLocationOnBone(local.x, local.y, 25.f, nearestBone.getData().getName());
+            GooglyEyeConfig.EyeLocationOnBone config = new GooglyEyeConfig.EyeLocationOnBone(local.x / Settings.scale, local.y / Settings.scale, 25.f, nearestBone.getData().getName());
             eyes.add(new GooglyEyeOnBone(config, skeleton));
             activeEye = null;
             activeSkeleton = null;
@@ -66,15 +67,15 @@ public class GooglyEyeOnBoneEditor {
             Vector2 local = activeEye.bone.worldToLocal(world);
             if (Gdx.input.isKeyPressed(Keys.SHIFT_LEFT) || Gdx.input.isKeyPressed(Keys.SHIFT_RIGHT)) {
                 // change radius
-                float dx = local.x - config.x;
-                float dy = local.y - config.y;
+                float dx = local.x / Settings.scale - config.x;
+                float dy = local.y / Settings.scale - config.y;
                 config.size = (float)Math.sqrt(dx*dx + dy*dy);
                 config.size = Math.max(config.size, 1.0f);
                 activeEye.update(skeleton, false);
             } else {
                 // move
-                config.x = local.x;
-                config.y = local.y;
+                config.x = local.x / Settings.scale;
+                config.y = local.y / Settings.scale;
                 activeEye.update(skeleton, false);
             }
             if (InputHelper.justReleasedClickLeft) {
