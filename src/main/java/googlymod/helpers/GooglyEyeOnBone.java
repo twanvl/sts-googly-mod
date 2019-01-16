@@ -24,7 +24,7 @@ public class GooglyEyeOnBone extends GooglyEye {
         if (bone == null) return;
         GooglyEyeConfig.EyeLocationOnBone config = getConfig();
         Vector2 coord = bone.localToWorld(new Vector2(config.x * Settings.scale, config.y * Settings.scale));
-        float scale = bone.getWorldScaleX() * Settings.scale;
+        float scale = (float)Math.sqrt((bone.getWorldScaleX()*bone.getWorldScaleX() + bone.getWorldScaleY()*bone.getWorldScaleY()) / 2) * Settings.scale;
         updateInternal(skeleton.getX() + coord.x, skeleton.getY() + coord.y, scale, animate, mouseFactor);
     }
 

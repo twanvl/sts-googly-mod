@@ -1,3 +1,6 @@
+### v1.6.1
+* Fix googly eye scaling for flipped skeletons
+
 ### v1.6.0
 * Googly eyes on orbs
 
