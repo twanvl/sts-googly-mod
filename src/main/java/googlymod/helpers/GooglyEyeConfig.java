@@ -1,10 +1,10 @@
 package googlymod.helpers;
 
 import java.io.FileWriter;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
-import java.net.URLClassLoader;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -95,28 +95,13 @@ public class GooglyEyeConfig {
     }
 
     private static GooglyEyeConfig loadFromModJar(URL mod_jar) {
-        URLClassLoader loader = null;
         try {
-            loader = new URLClassLoader(new URL[] {mod_jar}, null);
-            InputStream in = loader.getResourceAsStream("googly-eye-locations.json");
-            if (in == null) return null;
-            GooglyEyeConfig config = gson.fromJson(new InputStreamReader(in, StandardCharsets.UTF_8), GooglyEyeConfig.class);
-            in.close();
-            return config;
-        } catch (Exception e) {
-            System.out.println(mod_jar);
-            e.printStackTrace();
-            return null;
-        } finally {
-            if (loader != null) {
-                try {
-                    loader.close();
-                } catch(Exception e) {
-                    System.out.println(mod_jar);
-                    e.printStackTrace();
-                }
+            URL eyeLocations = new URL("jar", "", mod_jar + "!/googly-eye-locations.json");
+            try (InputStream in = eyeLocations.openStream()) {
+                return gson.fromJson(new InputStreamReader(in, StandardCharsets.UTF_8), GooglyEyeConfig.class);
             }
-        }
+        } catch (IOException e) {}
+        return null;
     }
 
     static {
