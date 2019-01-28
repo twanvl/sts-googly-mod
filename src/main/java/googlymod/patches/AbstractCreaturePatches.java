@@ -24,6 +24,7 @@ import googlymod.helpers.GooglyEyeOnBoneEditor;
 public class AbstractCreaturePatches {
     @SpirePatch(clz=AbstractCreature.class, method=SpirePatch.CLASS)
     public static class EyeFields {
+        public static SpireField<Skeleton> skeletonForEyes = new SpireField<>(() -> null);
         public static SpireField<ArrayList<? extends GooglyEye>> eyes = new SpireField<>(() -> null);
         public static SpireField<ArrayList<GooglyEyeOnBone>> eyesOnBone = new SpireField<>(() -> null);
         public static SpireField<ArrayList<GooglyEye>> eyesOther = new SpireField<>(() -> null);
@@ -42,10 +43,11 @@ public class AbstractCreaturePatches {
             Skeleton skeleton = (Skeleton)ReflectionHacks.getPrivate(creature,AbstractCreature.class,"skeleton");
             if (skeleton != null) {
                 ArrayList<GooglyEyeOnBone> eyes = EyeFields.eyesOnBone.get(creature);
-                if (eyes == null) {
+                if (eyes == null || skeleton != EyeFields.skeletonForEyes.get(creature)) {
                     eyes = GooglyEyeHelpers.initEyes(GooglyEyeConfig.getCreatureEyes(id), skeleton);
                     EyeFields.eyes.set(creature, eyes);
                     EyeFields.eyesOnBone.set(creature, eyes);
+                    EyeFields.skeletonForEyes.set(creature, skeleton);
                 } else {
                     GooglyEyeHelpers.updateEyes(eyes, skeleton);
                 }
