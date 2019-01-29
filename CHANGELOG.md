@@ -1,3 +1,7 @@
+### v1.6.2
+* Fix loading of per-mod googly-eye-config.json files breaking concurrent reading of resources from the same Jar (causing crash in theJungle)
+* Reload eye locations if creature skeleton changes.
+
 ### v1.6.1
 * Fix googly eye scaling for flipped skeletons
 
