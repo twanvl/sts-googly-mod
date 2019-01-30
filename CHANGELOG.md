@@ -1,3 +1,6 @@
+### v1.7.0
+* Googly eyes on potions
+
 ### v1.6.2
 * Fix loading of per-mod googly-eye-config.json files breaking concurrent reading of resources from the same Jar (causing crash in theJungle)
 * Reload eye locations if creature skeleton changes.

@@ -44,6 +44,7 @@ public class GooglyEyeConfig {
     public HashMap<String,ArrayList<EyeLocationOnBone>> creatures = new HashMap<>();
     public HashMap<String,ArrayList<EyeLocation>> creaturesStatic = new HashMap<>();
     public HashMap<String,ArrayList<EyeLocation>> orbs = new HashMap<>();
+    public HashMap<String,ArrayList<EyeLocation>> potions = new HashMap<>();
 
     // Global configuration
     private static GooglyEyeConfig theConfig;
@@ -57,6 +58,7 @@ public class GooglyEyeConfig {
         public TreeMap<String,ArrayList<EyeLocationOnBone>> creatures = new TreeMap<>();
         public TreeMap<String,ArrayList<EyeLocation>> creaturesStatic = new TreeMap<>();
         public TreeMap<String,ArrayList<EyeLocation>> orbs = new TreeMap<>();
+        public TreeMap<String,ArrayList<EyeLocation>> potions = new TreeMap<>();
 
         private void save() {
             try {
@@ -81,6 +83,7 @@ public class GooglyEyeConfig {
         creatures.putAll(config.creatures);
         creaturesStatic.putAll(config.creaturesStatic);
         orbs.putAll(config.orbs);
+        potions.putAll(config.potions);
     }
 
     static Gson gson;
@@ -175,6 +178,15 @@ public class GooglyEyeConfig {
     public static void setOrbEyes(String orbId, ArrayList<EyeLocation> eyes) {
         theConfig.orbs.put(orbId, eyes);
         editedConfig.orbs.put(orbId, eyes);
+        editedConfig.save();
+    }
+
+    public static ArrayList<EyeLocation> getPotionEyes(String potionId) {
+        return theConfig.potions.getOrDefault(potionId, noEyes);
+    }
+    public static void setPotionEyes(String potionId, ArrayList<EyeLocation> eyes) {
+        theConfig.potions.put(potionId, eyes);
+        editedConfig.potions.put(potionId, eyes);
         editedConfig.save();
     }
 }
