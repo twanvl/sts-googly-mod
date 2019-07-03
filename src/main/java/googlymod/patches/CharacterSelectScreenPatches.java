@@ -11,9 +11,9 @@ import com.evacipated.cardcrawl.modthespire.lib.SpireInsertPatch;
 import com.evacipated.cardcrawl.modthespire.lib.SpirePatch;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.Settings;
-import com.megacrit.cardcrawl.helpers.ImageMaster;
 import com.megacrit.cardcrawl.screens.charSelect.CharacterOption;
 import com.megacrit.cardcrawl.screens.charSelect.CharacterSelectScreen;
+import com.megacrit.cardcrawl.ui.buttons.ConfirmButton;
 
 import basemod.ReflectionHacks;
 import googlymod.helpers.GooglyEye;
@@ -49,7 +49,7 @@ public class CharacterSelectScreenPatches {
         private static class Locator extends SpireInsertLocator {
             @Override
             public int[] Locate(CtBehavior ctMethodToPatch) throws Exception {
-                Matcher finalMatcher = new Matcher.MethodCallMatcher(ImageMaster.class, "loadImage");
+                Matcher finalMatcher = new Matcher.MethodCallMatcher(ConfirmButton.class, "show");
                 return LineFinder.findInOrder(ctMethodToPatch, finalMatcher);
             }
         }

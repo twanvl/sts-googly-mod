@@ -1,3 +1,6 @@
+### v1.7.1
+* Fix eyes on character select screen after patch 1.1
+
 ### v1.7.0
 * Googly eyes on potions
 
