@@ -24,7 +24,6 @@ public class SingleRelicViewPopupPatches {
     }
 
     @SpirePatch(clz=SingleRelicViewPopup.class, method="open", paramtypez={AbstractRelic.class})
-    @SpirePatch(clz=SingleRelicViewPopup.class, method="open", paramtypez={AbstractRelic.class, ArrayList.class})
     public static class Open {
         public static void Postfix(SingleRelicViewPopup self, AbstractRelic relic) {
             float drawX = (float)Settings.WIDTH / 2.0f;
@@ -33,8 +32,11 @@ public class SingleRelicViewPopupPatches {
             ArrayList<GooglyEye> eyes = GooglyEyeHelpers.initEyes(GooglyEyeConfig.getRelicEyes(relic.relicId), drawX, drawY,0,0,0, scale);
             EyeFields.eyes.set(self, eyes);
         }
+    }
+    @SpirePatch(clz=SingleRelicViewPopup.class, method="open", paramtypez={AbstractRelic.class, ArrayList.class})
+    public static class Open2 {
         public static void Postfix(SingleRelicViewPopup self, AbstractRelic relic, ArrayList<AbstractRelic> group) {
-            Postfix(self,relic);
+            Open.Postfix(self,relic);
         }
     }
 

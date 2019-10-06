@@ -1,3 +1,6 @@
+### v1.7.2
+* Fix mod for new version of Mod the Spire
+
 ### v1.7.1
 * Fix eyes on character select screen after patch 1.1
 

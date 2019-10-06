@@ -22,7 +22,6 @@ public class SingleCardViewPopupPatches {
         public static SpireField<ArrayList<GooglyEye>> eyes = new SpireField<>(() -> null);
     }
 
-    @SpirePatch(clz=SingleCardViewPopup.class, method="open", paramtypez={AbstractCard.class})
     @SpirePatch(clz=SingleCardViewPopup.class, method="open", paramtypez={AbstractCard.class, CardGroup.class})
     public static class Open {
         public static void Postfix(SingleCardViewPopup self, AbstractCard card) {

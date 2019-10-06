@@ -36,17 +36,21 @@ public class AbstractRelicPatches {
 
     @SpirePatch(clz=AbstractRelic.class, method="renderInTopPanel")
     @SpirePatch(clz=AbstractRelic.class, method="render", paramtypez={SpriteBatch.class})
-    @SpirePatch(clz=AbstractRelic.class, method="render", paramtypez={SpriteBatch.class, boolean.class, Color.class})
-    @SpirePatch(clz=AbstractRelic.class, method="renderWithoutAmount", paramtypez={SpriteBatch.class, Color.class})
     public static class Render {
         public static void Postfix(AbstractRelic relic, SpriteBatch sb) {
             if (Settings.hideRelics) return;
             GooglyEyeHelpers.renderEyes(EyeFields.eyes.get(relic), sb);
         }
+    }
+    @SpirePatch(clz=AbstractRelic.class, method="renderWithoutAmount", paramtypez={SpriteBatch.class, Color.class})
+    public static class Render2 {
         public static void Postfix(AbstractRelic relic, SpriteBatch sb, Color outlineColor) {
             if (Settings.hideRelics) return;
             GooglyEyeHelpers.renderEyes(EyeFields.eyes.get(relic), sb);
         }
+    }
+    @SpirePatch(clz=AbstractRelic.class, method="render", paramtypez={SpriteBatch.class, boolean.class, Color.class})
+    public static class Render3 {
         public static void Postfix(AbstractRelic relic, SpriteBatch sb, boolean renderAmound, Color outlineColor) {
             if (Settings.hideRelics) return;
             GooglyEyeHelpers.renderEyes(EyeFields.eyes.get(relic), sb);

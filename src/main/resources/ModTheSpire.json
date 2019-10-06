@@ -3,8 +3,8 @@
   "name": "Googly Eyes",
   "author_list": ["twanvl"],
   "description": "Makes the game infinitely better.",
-  "version": "1.7.1",
-  "sts_version": "07-01-2019",
+  "version": "1.7.2",
+  "sts_version": "07-17-2019",
   "mts_version": "3.0.0",
   "dependencies": ["basemod"],
   "update_json": "https://api.github.com/repos/twanvl/sts-googly-mod/releases/latest"
