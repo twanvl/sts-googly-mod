@@ -1,4 +1,4 @@
-
+.PHONY: all clean
 all:
 	make -C src/main/resources/googlymod/images
 	mvn package
