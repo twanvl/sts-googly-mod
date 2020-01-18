@@ -1,3 +1,7 @@
+### v1.8.0
+* Update for Watcher release
+* Googly eyes for Watcher cards
+
 ### v1.7.2
 * Fix mod for new version of Mod the Spire
 
