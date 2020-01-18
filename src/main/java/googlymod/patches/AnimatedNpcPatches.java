@@ -2,6 +2,7 @@ package googlymod.patches;
 
 import java.util.ArrayList;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.esotericsoftware.spine.Skeleton;
 import com.evacipated.cardcrawl.modthespire.lib.SpireField;
@@ -53,9 +54,15 @@ public class AnimatedNpcPatches {
         }
     }
 
-    @SpirePatch(clz=AnimatedNpc.class, method="render")
+    @SpirePatch(clz=AnimatedNpc.class, method="render", paramtypez={SpriteBatch.class})
     public static class Render {
         public static void Postfix(AnimatedNpc npc, SpriteBatch sb) {
+            GooglyEyeHelpers.renderEyes(EyeFields.eyes.get(npc), sb);
+        }
+    }
+    @SpirePatch(clz=AnimatedNpc.class, method="render", paramtypez={SpriteBatch.class, Color.class})
+    public static class Render2 {
+        public static void Postfix(AnimatedNpc npc, SpriteBatch sb, Color color) {
             GooglyEyeHelpers.renderEyes(EyeFields.eyes.get(npc), sb);
         }
     }
