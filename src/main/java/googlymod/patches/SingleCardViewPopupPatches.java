@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.evacipated.cardcrawl.modthespire.lib.SpireField;
 import com.evacipated.cardcrawl.modthespire.lib.SpirePatch;
 import com.megacrit.cardcrawl.cards.AbstractCard;
-import com.megacrit.cardcrawl.cards.CardGroup;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.screens.SingleCardViewPopup;
 
@@ -22,17 +21,14 @@ public class SingleCardViewPopupPatches {
         public static SpireField<ArrayList<GooglyEye>> eyes = new SpireField<>(() -> null);
     }
 
-    @SpirePatch(clz=SingleCardViewPopup.class, method="open", paramtypez={AbstractCard.class, CardGroup.class})
-    public static class Open {
-        public static void Postfix(SingleCardViewPopup self, AbstractCard card) {
+    @SpirePatch(clz=SingleCardViewPopup.class, method="loadPortraitImg")
+    public static class LoadPortraitImg {
+        public static void Postfix(SingleCardViewPopup self, AbstractCard ___card) {
             float drawX = (float)Settings.WIDTH / 2.0f, offsetX = - 250.0f * Settings.scale;
             float drawY = (float)Settings.HEIGHT / 2.0f, offsetY = - 190.0f * Settings.scale + 136.0f * Settings.scale;
             float scale = Settings.scale;
-            ArrayList<GooglyEye> eyes = GooglyEyeHelpers.initEyes(GooglyEyeConfig.getCardEyes(card.cardID), drawX,drawY,offsetX,offsetY,0, scale);
+            ArrayList<GooglyEye> eyes = GooglyEyeHelpers.initEyes(GooglyEyeConfig.getCardEyes(___card.cardID), drawX,drawY,offsetX,offsetY,0, scale);
             EyeFields.eyes.set(self, eyes);
-        }
-        public static void Postfix(SingleCardViewPopup self, AbstractCard card, CardGroup group) {
-            Postfix(self,card);
         }
     }
 

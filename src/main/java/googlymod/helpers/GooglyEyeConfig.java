@@ -15,6 +15,8 @@ import com.evacipated.cardcrawl.modthespire.Loader;
 import com.evacipated.cardcrawl.modthespire.ModInfo;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.megacrit.cardcrawl.core.Settings;
+import com.megacrit.cardcrawl.unlock.UnlockTracker;
 
 public class GooglyEyeConfig {
     public static class EyeLocation {
@@ -38,6 +40,7 @@ public class GooglyEyeConfig {
     }
 
     public HashMap<String,ArrayList<EyeLocation>> cards = new HashMap<>();
+    public HashMap<String,ArrayList<EyeLocation>> betaCards = new HashMap<>();
     public HashMap<String,ArrayList<EyeLocation>> relics = new HashMap<>();
     public HashMap<String,ArrayList<EyeLocation>> events = new HashMap<>();
     public HashMap<String,ArrayList<EyeLocation>> charSelect = new HashMap<>();
@@ -52,6 +55,7 @@ public class GooglyEyeConfig {
     // Note: use TreeMap to get sorted json files
     private static class EditedConfig {
         public TreeMap<String,ArrayList<EyeLocation>> cards = new TreeMap<>();
+        public TreeMap<String,ArrayList<EyeLocation>> betaCards = new TreeMap<>();
         public TreeMap<String,ArrayList<EyeLocation>> relics = new TreeMap<>();
         public TreeMap<String,ArrayList<EyeLocation>> events = new TreeMap<>();
         public TreeMap<String,ArrayList<EyeLocation>> charSelect = new TreeMap<>();
@@ -77,6 +81,7 @@ public class GooglyEyeConfig {
 
     private void merge(GooglyEyeConfig config) {
         cards.putAll(config.cards);
+        betaCards.putAll(config.betaCards);
         relics.putAll(config.relics);
         events.putAll(config.events);
         charSelect.putAll(config.charSelect);
@@ -119,11 +124,28 @@ public class GooglyEyeConfig {
     }
 
     public static ArrayList<EyeLocation> getCardEyes(String cardId) {
-        return theConfig.cards.getOrDefault(cardId, noEyes);
+        boolean betaArt = UnlockTracker.betaCardPref.getBoolean(cardId, false) || Settings.PLAYTESTER_ART_MODE;
+        return getCardEyes(cardId, betaArt);
+    }
+    private static ArrayList<EyeLocation> getCardEyes(String cardId, boolean betaArt) {
+        if (betaArt) {
+            return theConfig.betaCards.getOrDefault(cardId, noEyes);
+        } else {
+            return theConfig.cards.getOrDefault(cardId, noEyes);
+        }
     }
     public static void setCardEyes(String cardId, ArrayList<EyeLocation> eyes) {
-        theConfig.cards.put(cardId, eyes);
-        editedConfig.cards.put(cardId, eyes);
+        boolean betaArt = UnlockTracker.betaCardPref.getBoolean(cardId, false) || Settings.PLAYTESTER_ART_MODE;
+        setCardEyes(cardId, eyes, betaArt);
+    }
+    private static void setCardEyes(String cardId, ArrayList<EyeLocation> eyes, boolean betaArt) {
+        if (betaArt) {
+            theConfig.betaCards.put(cardId, eyes);
+            editedConfig.betaCards.put(cardId, eyes);
+        } else {
+            theConfig.cards.put(cardId, eyes);
+            editedConfig.cards.put(cardId, eyes);
+        }
         editedConfig.save();
     }
 

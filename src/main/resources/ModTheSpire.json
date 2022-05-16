@@ -3,7 +3,7 @@
   "name": "Googly Eyes",
   "author_list": ["twanvl"],
   "description": "Makes the game infinitely better.",
-  "version": "1.8.0",
+  "version": "1.9.0",
   "sts_version": "01-16-2020",
   "mts_version": "3.0.0",
   "dependencies": ["basemod"],

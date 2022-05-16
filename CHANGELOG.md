@@ -1,3 +1,6 @@
+### HEAD
+* Add support for beta art
+
 ### v1.8.0
 * Update for Watcher release
 * Googly eyes for Watcher cards
